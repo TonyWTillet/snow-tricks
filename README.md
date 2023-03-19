@@ -47,7 +47,7 @@ Lien vers les analyses SensioLabsInsight, Codacy ou Codeclimate (via une médail
 > Yarn
 
 ## Step 1: clone the projet
-    git clone https://github.com/kirokou/snowtricks.git
+    git clone https://github.com/TonyWTillet/snow-tricks.git
 
 ## Step 2: install composer
 https://getcomposer.org/download/
