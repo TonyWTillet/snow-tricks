@@ -8,17 +8,16 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         {# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
         {% block stylesheets %}
-            {#{{ encore_entry_link_tags('app') }}#}
-            <link rel="stylesheet" href="{{ asset('assets/css/base.css') }}">
-            <link rel="stylesheet" href="{{ asset('assets/css/vendor.css') }}">
-            <link rel="stylesheet" href="{{ asset('assets/css/main.css') }}">
+            {{ encore_entry_link_tags('app') }}
         {% endblock %}
         <!-- favicons -->
         <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('apple-touch-icon.png') }}">
         <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('favicon-32x32.png') }}">
         <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('favicon-16x16.png') }}">
         <link rel="manifest" href="{{ asset('site.webmanifest') }}">
-        <script src="{{ asset('assets/js/modernizr.js') }}"></script>
+        {% block javascripts %}
+            {{ encore_entry_script_tags('app') }}
+        {% endblock %}
     </head>
     <body>
         {% block preloader %}
@@ -36,11 +35,6 @@
             {% endblock %}
 
         </div>
-        {% block javascripts %}
-            {{ encore_entry_script_tags('app') }}
-            <script src="{{ asset('assets/js/jquery-3.2.1.min.js') }}"></script>
-            <script src="{{ asset('assets/js/plugins.js') }}"></script>
-            <script src="{{ asset('assets/js/main.js') }}"></script>
-        {% endblock %}
+
     </body>
 </html>

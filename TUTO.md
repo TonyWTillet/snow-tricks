@@ -7,6 +7,7 @@
 - Commande générale pour symfony : `symfony`
 - Installer Encore avec la commande  `composer require symfony/webpack-encore-bundle`
 - Lancer `yarn install` ou `npm install` pour installer les dépendances
+- Démarrer le serveur de développement avec la commande `yarn encore dev --watch` ou `npm run dev --watch`
 
 ## Lancer le serveur de développement
 - Lancer le serveur de développement avec la commande `symfony serve`
