@@ -33,8 +33,12 @@ Lien vers les analyses SensioLabsInsight, Codacy ou Codeclimate (via une médail
 
 # HOW INSTALL THIS PROJECT 
 
+## Template
+- Demo : https://www.tailwindawesome.com/resources/stablo/demo
+- Git : https://github.com/web3templates/stablo
+
 ## Required and technical environment
-> Language => PHP 7.2.14
+> Language => PHP 8.2.14
 
 > Database => MySQL 5.7.25
 
