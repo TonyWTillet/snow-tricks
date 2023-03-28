@@ -6,10 +6,9 @@
         <meta name="description" content="Snow Tricks | Blog">
         <meta name="author" content="Tony Tillet">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-
+        <link href="https://fonts.googleapis.com/css?family=Work+Sans:400,700,900&display=swap" rel="stylesheet">
         {# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
         {% block stylesheets %}
-            <link href="https://fonts.googleapis.com/css?family=Work+Sans:400,700,900&display=swap" rel="stylesheet">
             {{ encore_entry_link_tags('app') }}
         {% endblock %}
         <!-- favicons -->
@@ -17,27 +16,24 @@
         <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('favicon-32x32.png') }}">
         <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('favicon-16x16.png') }}">
         <link rel="manifest" href="{{ asset('site.webmanifest') }}">
-        <script src="{{ asset('assets/js/modernizr.js') }}"></script>
-
     </head>
-    <body>
-        {% block preloader %}
-            {% include 'partials/_preloader.html.twig' %}
-        {% endblock %}
+    <body data-spy="scroll" data-target=".site-navbar-target" data-offset="300">
+        <div class="site-wrap" id="home-section">
 
-        {% block header %}
-            {% include 'partials/_header.html.twig' %}
-        {% endblock %}
+            {% block header %}
+                {% include 'partials/_header.html.twig' %}
+            {% endblock %}
 
-        {% block body %}{% endblock %}
+            {% block body %}{% endblock %}
 
-        {% block footer %}
-            {% include 'partials/_footer.html.twig' %}
-        {% endblock %}
+            {% block footer %}
+                {% include 'partials/_footer.html.twig' %}
+            {% endblock %}
 
+        </div>
 
         {% block javascripts %}
-            {#  {{ encore_entry_script_tags('app') }}#}
+            {{ encore_entry_script_tags('app') }}
             <script src="{{ asset('js/jquery-3.3.1.min.js') }}"></script>
             <script src="{{ asset('js/jquery-migrate-3.0.0.js') }}"></script>
             <script src="{{ asset('js/popper.min.js') }}"></script>
@@ -52,7 +48,7 @@
             <script src="{{ asset('js/isotope.pkgd.min.js') }}"></script>
             <script src="{{ asset('js/aos.js') }}"></script>
 
-            <script src="js/main.js"></script>
+            <script src="{{ asset('js/main.js') }}"></script>
         {% endblock %}
     </body>
 </html>
