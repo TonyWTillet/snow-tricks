@@ -38,7 +38,7 @@ Lien vers les analyses SensioLabsInsight, Codacy ou Codeclimate (via une médail
 - Git : https://github.com/web3templates/stablo
 
 ## Required and technical environment
-> Language => PHP 8.2.14
+> Language => PHP 8.1.*
 
 > Database => MySQL 5.7.25
 
@@ -48,7 +48,8 @@ Lien vers les analyses SensioLabsInsight, Codacy ou Codeclimate (via une médail
 
 > Composer 
 
-> Yarn
+> NodeJS 
+
 
 ## Step 1: clone the projet
     git clone https://github.com/TonyWTillet/snow-tricks.git
@@ -60,7 +61,7 @@ https://getcomposer.org/download/
     composer install
 
 ## Step 4: webpack encore
-    yarn install
+    npm install
 
 ## Step 5: config .env
 
