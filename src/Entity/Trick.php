@@ -40,9 +40,20 @@ class Trick
     #[ORM\OneToMany(mappedBy: 'trick', targetEntity: Comment::class)]
     private Collection $comments;
 
+    #[ORM\ManyToOne(inversedBy: 'tricks')]
+    private ?picture $default_picture = null;
+
+    #[ORM\ManyToMany(targetEntity: video::class, inversedBy: 'tricks')]
+    private Collection $videos;
+
+    #[ORM\ManyToMany(targetEntity: picture::class, inversedBy: 'trick_pictures')]
+    private Collection $pictures;
+
     public function __construct()
     {
         $this->comments = new ArrayCollection();
+        $this->videos = new ArrayCollection();
+        $this->pictures = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -148,6 +159,66 @@ class Trick
                 $comment->setTrick(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getDefaultPicture(): ?picture
+    {
+        return $this->default_picture;
+    }
+
+    public function setDefaultPicture(?picture $default_picture): self
+    {
+        $this->default_picture = $default_picture;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, video>
+     */
+    public function getVideos(): Collection
+    {
+        return $this->videos;
+    }
+
+    public function addVideo(video $video): self
+    {
+        if (!$this->videos->contains($video)) {
+            $this->videos->add($video);
+        }
+
+        return $this;
+    }
+
+    public function removeVideo(video $video): self
+    {
+        $this->videos->removeElement($video);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, picture>
+     */
+    public function getPictures(): Collection
+    {
+        return $this->pictures;
+    }
+
+    public function addPicture(picture $picture): self
+    {
+        if (!$this->pictures->contains($picture)) {
+            $this->pictures->add($picture);
+        }
+
+        return $this;
+    }
+
+    public function removePicture(picture $picture): self
+    {
+        $this->pictures->removeElement($picture);
 
         return $this;
     }
