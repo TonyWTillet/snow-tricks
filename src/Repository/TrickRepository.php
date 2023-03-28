@@ -2,26 +2,26 @@
 
 namespace App\Repository;
 
-use App\Entity\Post;
+use App\Entity\Trick;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @extends ServiceEntityRepository<Post>
+ * @extends ServiceEntityRepository<Trick>
  *
- * @method Post|null find($id, $lockMode = null, $lockVersion = null)
- * @method Post|null findOneBy(array $criteria, array $orderBy = null)
- * @method Post[]    findAll()
- * @method Post[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method Trick|null find($id, $lockMode = null, $lockVersion = null)
+ * @method Trick|null findOneBy(array $criteria, array $orderBy = null)
+ * @method Trick[]    findAll()
+ * @method Trick[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class PostRepository extends ServiceEntityRepository
+class TrickRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, Post::class);
+        parent::__construct($registry, Trick::class);
     }
 
-    public function save(Post $entity, bool $flush = false): void
+    public function save(Trick $entity, bool $flush = false): void
     {
         $this->getEntityManager()->persist($entity);
 
@@ -30,7 +30,7 @@ class PostRepository extends ServiceEntityRepository
         }
     }
 
-    public function remove(Post $entity, bool $flush = false): void
+    public function remove(Trick $entity, bool $flush = false): void
     {
         $this->getEntityManager()->remove($entity);
 
