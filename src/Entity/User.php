@@ -25,6 +25,9 @@ class User
     #[ORM\Column(length: 255)]
     private ?string $pseudo = null;
 
+    #[ORM\OneToOne(mappedBy: 'user', cascade: ['persist', 'remove'])]
+    private ?Token $token = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -74,6 +77,23 @@ class User
     public function setPseudo(string $pseudo): self
     {
         $this->pseudo = $pseudo;
+
+        return $this;
+    }
+
+    public function getToken(): ?Token
+    {
+        return $this->token;
+    }
+
+    public function setToken(Token $token): self
+    {
+        // set the owning side of the relation if necessary
+        if ($token->getUser() !== $this) {
+            $token->setUser($this);
+        }
+
+        $this->token = $token;
 
         return $this;
     }
