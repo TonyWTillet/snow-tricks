@@ -12,6 +12,7 @@ import '../public/assets/css/vendor.css';
 
 // start the Stimulus application
 import './bootstrap';
+import '../public/assets/js/plugins.js';
 import '../public/assets/js/modernizr.js';
 import '../public/assets/js/main.js';
-import '../public/assets/js/plugins.js';
+
