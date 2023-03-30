@@ -2,18 +2,53 @@
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
+        <title>{% block title %}Snow Tricks{% endblock %}</title>
+        <meta name="description" content="Snow Tricks | Blog">
+        <meta name="author" content="Tony Tillet">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="https://fonts.googleapis.com/css?family=Work+Sans:400,700,900&display=swap" rel="stylesheet">
         {# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
         {% block stylesheets %}
             {{ encore_entry_link_tags('app') }}
         {% endblock %}
+        <!-- favicons -->
+        <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('apple-touch-icon.png') }}">
+        <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('favicon-32x32.png') }}">
+        <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('favicon-16x16.png') }}">
+        <link rel="manifest" href="{{ asset('site.webmanifest') }}">
+    </head>
+    <body data-spy="scroll" data-target=".site-navbar-target" data-offset="300">
+        <div class="site-wrap" id="home-section">
+
+            {% block header %}
+                {% include 'partials/_header.html.twig' %}
+            {% endblock %}
+
+            {% block body %}{% endblock %}
+
+            {% block footer %}
+                {% include 'partials/_footer.html.twig' %}
+            {% endblock %}
+
+        </div>
 
         {% block javascripts %}
             {{ encore_entry_script_tags('app') }}
+            <script src="{{ asset('js/jquery-3.3.1.min.js') }}"></script>
+            <script src="{{ asset('js/jquery-migrate-3.0.0.js') }}"></script>
+            <script src="{{ asset('js/popper.min.js') }}"></script>
+            <script src="{{ asset('js/bootstrap.min.js') }}"></script>
+            <script src="{{ asset('js/jquery.sticky.js') }}"></script>
+            <script src="{{ asset('js/jquery.waypoints.min.js') }}"></script>
+            <script src="{{ asset('js/jquery.animateNumber.min.js') }}"></script>
+            <script src="{{ asset('js/jquery.fancybox.min.js') }}"></script>
+            <script src="{{ asset('js/jquery.stellar.min.js') }}"></script>
+            <script src="{{ asset('js/jquery.easing.1.3.js') }}"></script>
+            <script src="{{ asset('js/bootstrap-datepicker.min.js') }}"></script>
+            <script src="{{ asset('js/isotope.pkgd.min.js') }}"></script>
+            <script src="{{ asset('js/aos.js') }}"></script>
+
+            <script src="{{ asset('js/main.js') }}"></script>
         {% endblock %}
-    </head>
-    <body>
-        {% block body %}{% endblock %}
     </body>
 </html>
