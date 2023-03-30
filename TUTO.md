@@ -29,3 +29,4 @@
 - Créer une base de données avec la commande `php bin/console doctrine:database:create` ou `php bin/console d:d:c`
 - Créer une entité avec la commande `php bin/console make:entity`
  
+## Utiliser MAKE  avec Makefile

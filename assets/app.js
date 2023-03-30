@@ -6,15 +6,11 @@
  */
 
 // any CSS you import will output into a single css file (app.css in this case)
-import '../public/fonts/icomoon/style.css';
-import '../public/css/bootstrap.min.css';
-import '../public/css/bootstrap-datepicker.css';
-import '../public/css/jquery.fancybox.min.css';
-import '../public/css/aos.css';
-import '../public/css/style.css';
+import './fonts/icomoon/style.css';
+import './css/bootstrap.min.css';
+import './css/bootstrap-datepicker.css';
+import './css/jquery.fancybox.min.css';
+import './css/aos.css';
+import './css/style.css';
 
-
-
-// start the Stimulus application
-import './bootstrap';
-
+console.log("Welcome to your app's JavaScript file!")
