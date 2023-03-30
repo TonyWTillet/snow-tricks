@@ -6,7 +6,7 @@ services:
     container_name: database_snowtricks
     restart: always
     volumes:
-      - database-data:/laragon/bin/data/mysql
+      - db_data:/var/mysql
     environment:
       MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
     networks:
