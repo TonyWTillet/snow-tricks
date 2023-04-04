@@ -50,3 +50,7 @@
     $(SYMFONY_CLI) server:start
     @$(call GREEN,"The application is available at: http://127.0.0.1:8000/.")`
 
+## Installation de l'environeemnt de test
+- https://symfony.com/doc/6.2/the-fast-track/fr/17-tests.html#ecrire-des-tests-unitaires
+- Créer la base de donnée de test : `php bin/console d:d:c --env=test`
+- Puis générer les migrations : `php bin/console d:m:m --env=test`
