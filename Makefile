@@ -2,7 +2,7 @@
 PHP = php
 COMPOSER = composer
 NPM = npm
-SYMFONY_CONSOLE = PHP bin/console
+SYMFONY_CONSOLE = $(PHP) bin/console
 SYMFONY_CLI = symfony
 
 # Colors
@@ -40,10 +40,9 @@ npm-watch: ## Update all npm dependencies
 
 ## —— 📊 Database ——
 database-init: ## Init database
-	$(MAKE) database-drop
-	$(MAKE) database-create
-	$(MAKE) database-migrate
-	$(MAKE) database-fixtures-load
+	$(SYMFONY_CONSOLE) d:d:c --if-not-exists
+	$(SYMFONY_CONSOLE) d:m:m
+
 
 database-drop: ## Create database
 	$(SYMFONY_CONSOLE) d:d:d --force --if-exists
@@ -55,7 +54,7 @@ database-remove: ## Drop database
 	$(SYMFONY_CONSOLE) d:d:d --force --if-exists
 
 database-migration: ## Make migration
-	$(SYMFONY_CONSOLE) make:migration
+	$(SYMFONY_CONSOLE) d:m:m
 
 migration: ## Alias : database-migration
 	$(MAKE) database-migration
