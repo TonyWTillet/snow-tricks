@@ -18,7 +18,7 @@ class Comment
     #[ORM\JoinColumn(nullable: false)]
     private ?user $user = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(Types::TEXT, length: 255, nullable: false)]
     private ?string $content = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]

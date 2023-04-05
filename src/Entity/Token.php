@@ -18,7 +18,7 @@ class Token
     #[ORM\JoinColumn(nullable: false)]
     private ?user $user = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, unique: true, nullable: false)]
     private ?string $value = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
