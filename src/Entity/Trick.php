@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\TrickRepository;
+use Cocur\Slugify\Slugify;
 use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -66,6 +67,11 @@ class Trick
         $this->comments = new ArrayCollection();
         $this->videos = new ArrayCollection();
         $this->pictures = new ArrayCollection();
+    }
+
+    public function prePersist(): void
+    {
+        $this->slug = (new Slugify())->slugify($this->name);
     }
 
     #[ORM\PreUpdate]
