@@ -53,6 +53,9 @@ database-create: ## Create database
 database-remove: ## Drop database
 	$(SYMFONY_CONSOLE) d:d:d --force --if-exists
 
+schema: ## Create migrations
+	$(SYMFONY_CONSOLE) d:s:c
+
 database-migration: ## Make migration
 	$(SYMFONY_CONSOLE) d:m:m
 

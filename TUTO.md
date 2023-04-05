@@ -28,7 +28,7 @@
 ## Utiliser Doctrine / ORM
 - Créer la base de données avec la commande `php bin/console doctrine:database:create` ou `php bin/console d:d:c`
 - Créer une entité avec la commande `php bin/console make:entity`
-- Créer une migration avec la commande avec les entités `php bin/console make:migration:diff` ou `php bin/console d:m:diff`
+- Créer une migration avec la commande avec les entités `php bin/console doctrine:migration:diff` ou `php bin/console d:m:diff`
 - Créer les tables en éxécutant les migrations avec la commande `php bin/console doctrine:migrations:migrate` ou `php bin/console d:m:m`
  
 ## Utiliser MAKE  avec Makefile

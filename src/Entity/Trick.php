@@ -8,8 +8,10 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: TrickRepository::class)]
+#[ORM\HasLifecycleCallbacks]
 class Trick
 {
     #[ORM\Id]
@@ -17,17 +19,24 @@ class Trick
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(type: Types::STRING, length: 255, unique: true,  nullable: false)]
+    #[Assert\NotBlank]
     private ?string $name = null;
 
-    #[ORM\Column(type: Types::TEXT)]
+    #[ORM\Column(type: Types::TEXT, nullable: false)]
+    #[Assert\NotBlank]
     private ?string $content = null;
 
-    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
-    private ?DateTimeInterface $created_at = null;
+    #[ORM\Column(type: Types::STRING, length: 255, unique: true,  nullable: false)]
+    private ?string $slug = null;
 
-    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
-    private ?DateTimeInterface $updated_at = null;
+    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    #[Assert\NotNull]
+    private ?DateTimeInterface $created_at;
+
+    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    #[Assert\NotNull]
+    private ?DateTimeInterface $updated_at;
 
     #[ORM\ManyToOne(inversedBy: 'tricks')]
     #[ORM\JoinColumn(nullable: false)]
@@ -49,11 +58,20 @@ class Trick
     #[ORM\ManyToMany(targetEntity: picture::class, inversedBy: 'trick_pictures')]
     private Collection $pictures;
 
+
     public function __construct()
     {
+        $this->updated_at = new \DateTimeImmutable();
+        $this->created_at = new \DateTimeImmutable();
         $this->comments = new ArrayCollection();
         $this->videos = new ArrayCollection();
         $this->pictures = new ArrayCollection();
+    }
+
+    #[ORM\PreUpdate]
+    public function preUpdate(): void
+    {
+        $this->updated_at = new \DateTimeImmutable();
     }
 
     public function getId(): ?int
@@ -83,6 +101,16 @@ class Trick
         $this->content = $content;
 
         return $this;
+    }
+
+    public function getSlug(): ?string
+    {
+        return $this->slug;
+    }
+
+    public function setSlug(?string $slug): void
+    {
+        $this->slug = $slug;
     }
 
     public function getCreatedAt(): ?DateTimeInterface
@@ -221,5 +249,10 @@ class Trick
         $this->pictures->removeElement($picture);
 
         return $this;
+    }
+
+    public function __toString(): string
+    {
+        return $this->name;
     }
 }

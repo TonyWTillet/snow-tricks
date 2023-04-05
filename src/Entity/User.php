@@ -3,32 +3,50 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
+#[ORM\HasLifecycleCallbacks]
 class User
 {
+    const USER_PERMISSIONS = ['ROLE_USER', 'ROLE_ADMIN'];
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, unique: true, nullable: false)]
     private ?string $email = null;
 
-    #[ORM\Column(length: 100)]
-    private ?string $role = null;
+    #[ORM\Column(length: 100, nullable: false)]
+    private ?string $role = User::USER_PERMISSIONS[0];
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, nullable: false)]
     private ?string $password = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, unique: true, nullable: false)]
     private ?string $pseudo = null;
+
+    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    #[Assert\NotNull]
+    private ?DateTimeInterface $created_at;
+
+    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    #[Assert\NotNull]
+    private ?DateTimeInterface $updated_at;
+
+
+
 
     #[ORM\OneToOne(mappedBy: 'user', cascade: ['persist', 'remove'])]
     private ?Token $token = null;
+
 
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Comment::class, orphanRemoval: true)]
     private Collection $comments;
@@ -40,6 +58,14 @@ class User
     {
         $this->comments = new ArrayCollection();
         $this->tricks = new ArrayCollection();
+        $this->created_at = new \DateTimeImmutable();
+        $this->updated_at = new \DateTimeImmutable();
+    }
+
+    #[ORM\PreUpdate]
+    public function preUpdate(): void
+    {
+        $this->updated_at = new \DateTimeImmutable();
     }
 
     public function getId(): ?int
@@ -93,6 +119,29 @@ class User
         $this->pseudo = $pseudo;
 
         return $this;
+    }
+
+    public function getCreatedAt(): ?DateTimeInterface
+    {
+        return $this->created_at;
+    }
+
+
+    public function setCreatedAt(?DateTimeInterface $created_at): void
+    {
+        $this->created_at = $created_at;
+    }
+
+
+    public function getUpdatedAt(): ?DateTimeInterface
+    {
+        return $this->updated_at;
+    }
+
+
+    public function setUpdatedAt(?DateTimeInterface $updated_at): self
+    {
+        $this->updated_at = $updated_at;
     }
 
     public function getToken(): ?Token
