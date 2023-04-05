@@ -2,7 +2,7 @@
 PHP = php
 COMPOSER = composer
 NPM = npm
-SYMFONY_CONSOLE = PHP bin/console
+SYMFONY_CONSOLE = $(PHP) bin/console
 SYMFONY_CLI = symfony
 
 # Colors
@@ -13,7 +13,7 @@ RED = /bin/echo -e "\x1b[31m\#\# $1\x1b[0m"
 init: ## Init the project
 	$(COMPOSER) install
 	$(NPM) install
-	$(NPM) run
+	$(NPM) run dev
 	$(SYMFONY_CLI) server:start
 	@$(call GREEN,"The application is available at: http://127.0.0.1:8000/.")
 
@@ -40,10 +40,9 @@ npm-watch: ## Update all npm dependencies
 
 ## —— 📊 Database ——
 database-init: ## Init database
-	$(MAKE) database-drop
-	$(MAKE) database-create
-	$(MAKE) database-migrate
-	$(MAKE) database-fixtures-load
+	$(SYMFONY_CONSOLE) d:d:c --if-not-exists
+	$(SYMFONY_CONSOLE) d:m:m
+
 
 database-drop: ## Create database
 	$(SYMFONY_CONSOLE) d:d:d --force --if-exists
@@ -55,7 +54,7 @@ database-remove: ## Drop database
 	$(SYMFONY_CONSOLE) d:d:d --force --if-exists
 
 database-migration: ## Make migration
-	$(SYMFONY_CONSOLE) make:migration
+	$(SYMFONY_CONSOLE) d:m:m
 
 migration: ## Alias : database-migration
 	$(MAKE) database-migration
@@ -71,6 +70,34 @@ database-fixtures-load: ## Load fixtures
 
 fixtures: ## Alias : database-fixtures-load
 	$(MAKE) database-fixtures-load
+
+## —— ✅ Test ——
+.PHONY: tests
+tests: ## Run all tests
+	$(MAKE) database-init-test
+	$(PHP) bin/phpunit --testdox tests/Unit/
+	$(PHP) bin/phpunit --testdox tests/Functional/
+	$(PHP) bin/phpunit --testdox tests/E2E/
+
+database-init-test: ## Init database for test
+	$(SYMFONY_CONSOLE) d:d:d --force --if-exists --env=test ## Drop database
+	$(SYMFONY_CONSOLE) d:d:c --env=test ## Create database
+	$(SYMFONY_CONSOLE) d:m:m --no-interaction --env=test ## Migrations
+	#$(SYMFONY_CONSOLE) d:f:l --no-interaction --env=test ## Fixtures
+
+unit-test: ## Run unit tests
+	$(MAKE) database-init-test
+	$(PHP) bin/phpunit --testdox tests/Unit/
+
+functional-test: ## Run functional tests
+	$(MAKE) database-init-test
+	$(PHP) bin/phpunit --testdox tests/Functional/
+
+# PANTHER_NO_HEADLESS=1 ./bin/phpunit --filter LikeTest --debug to debug with Chrome
+e2e-test: ## Run E2E tests
+	$(MAKE) database-init-test
+	$(PHP) bin/phpunit --testdox tests/E2E/
+
 
 ## —— 🛠️  Others ——
 help: ## List of commands
