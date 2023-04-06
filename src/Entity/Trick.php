@@ -56,10 +56,10 @@ class Trick
     #[ORM\ManyToOne(inversedBy: 'tricks')]
     private ?picture $default_picture = null;
 
-    #[ORM\ManyToMany(targetEntity: video::class, inversedBy: 'tricks')]
+    #[ORM\ManyToMany(targetEntity: Video::class, inversedBy: 'tricks', cascade: ['persist', 'remove'])]
     private Collection $videos;
 
-    #[ORM\ManyToMany(targetEntity: picture::class, inversedBy: 'trick_pictures')]
+    #[ORM\ManyToMany(targetEntity: Picture::class, inversedBy: 'trick_pictures', cascade: ['persist', 'remove'])]
     private Collection $pictures;
 
 

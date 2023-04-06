@@ -66,4 +66,5 @@
 
 ## Installer VichUploader
 - Installer le package avec la commande `composer require vich/uploader-bundle`
-- 
+- Ajouter la déclaration dans le fichier `config/bundles.php`
+- Ajouter la configuration dans le fichier `config/packages/vich_uploader.yaml`
