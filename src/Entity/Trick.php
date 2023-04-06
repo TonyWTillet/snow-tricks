@@ -71,7 +71,7 @@ class Trick
         $this->videos = new ArrayCollection();
         $this->pictures = new ArrayCollection();
     }
-
+    #[ORM\PrePersist]
     public function prePersist(): void
     {
         $this->slug = (new Slugify())->slugify($this->name);
