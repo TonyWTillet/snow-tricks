@@ -27,7 +27,6 @@ class Comment
     #[ORM\ManyToOne(inversedBy: 'comments')]
     #[ORM\JoinColumn(nullable: false)]
     private ?trick $trick = null;
-
     public function getId(): ?int
     {
         return $this->id;

@@ -43,11 +43,12 @@ class Picture
         $this->updatedAt = new DateTimeImmutable();
     }
 
-    #[ORM\OneToMany(mappedBy: 'default_picture', targetEntity: Trick::class)]
+    #[ORM\OneToOne(mappedBy: 'default_picture', targetEntity: Trick::class)]
     private Collection $tricks;
 
-    #[ORM\ManyToMany(targetEntity: Trick::class, mappedBy: 'pictures')]
-    private Collection $trick_pictures;
+    #[ORM\ManyToOne(inversedBy: 'pictures')]
+    private ?Trick $trick = null;
+
 
     public function __construct()
     {
@@ -191,6 +192,18 @@ class Picture
         if ($this->trick_pictures->removeElement($trickPicture)) {
             $trickPicture->removePicture($this);
         }
+
+        return $this;
+    }
+
+    public function getTrick(): ?int
+    {
+        return $this->trick;
+    }
+
+    public function setTrick(int $trick): self
+    {
+        $this->trick = $trick;
 
         return $this;
     }

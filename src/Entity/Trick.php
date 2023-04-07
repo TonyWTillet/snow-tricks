@@ -53,15 +53,14 @@ class Trick
     #[ORM\OneToMany(mappedBy: 'trick', targetEntity: Comment::class)]
     private Collection $comments;
 
-    #[ORM\ManyToOne(inversedBy: 'tricks')]
+    #[ORM\OneToOne(inversedBy: 'tricks')]
     private ?picture $default_picture = null;
 
-    #[ORM\ManyToMany(targetEntity: video::class, inversedBy: 'tricks')]
-    private Collection $videos;
-
-    #[ORM\ManyToMany(targetEntity: picture::class, inversedBy: 'trick_pictures')]
+    #[ORM\OneToMany(mappedBy: 'trick', targetEntity: Picture::class)]
     private Collection $pictures;
 
+    #[ORM\OneToMany(mappedBy: 'trick', targetEntity: Video::class)]
+    private Collection $videos;
 
     public function __construct()
     {
