@@ -141,7 +141,7 @@ class User
     }
 
 
-    public function setUpdatedAt(?DateTimeInterface $updated_at): self
+    public function setUpdatedAt(?DateTimeInterface $updated_at): void
     {
         $this->updated_at = $updated_at;
     }
