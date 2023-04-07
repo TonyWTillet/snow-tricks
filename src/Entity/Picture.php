@@ -4,12 +4,16 @@ namespace App\Entity;
 
 use App\Repository\PictureRepository;
 use DateTimeImmutable;
+use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Vich\UploaderBundle\Entity\File;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
+use Symfony\Component\Validator\Constraints as Assert;
+
 
 #[ORM\Entity(repositoryClass: PictureRepository::class)]
 #[ORM\HasLifecycleCallbacks]
@@ -22,6 +26,9 @@ class Picture
     #[ORM\Column]
     private ?int $id = null;
 
+    #[ORM\ManyToOne(inversedBy: 'pictures')]
+    private ?Trick $trick = null;
+
     #[Vich\UploadableField(mapping: 'picture', fileNameProperty: 'name')]
     private ?File $imageFile = null;
 
@@ -30,12 +37,13 @@ class Picture
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $alt = null;
+    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    #[Assert\NotNull]
+    private ?DateTimeInterface $created_at;
 
-    #[ORM\Column(type: 'datetime_immutable')]
-    private DateTimeImmutable $updatedAt;
-
-    #[ORM\Column(type: 'datetime_immutable')]
-    private DateTimeImmutable $createdAt;
+    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    #[Assert\NotNull]
+    private ?DateTimeInterface $updated_at;
 
     #[ORM\PreUpdate]
     public function preUpdate(): void
@@ -43,19 +51,10 @@ class Picture
         $this->updatedAt = new DateTimeImmutable();
     }
 
-    #[ORM\OneToOne(mappedBy: 'default_picture', targetEntity: Trick::class)]
-    private Collection $tricks;
-
-    #[ORM\ManyToOne(inversedBy: 'pictures')]
-    private ?Trick $trick = null;
-
-
     public function __construct()
     {
-        $this->tricks = new ArrayCollection();
-        $this->trick_pictures = new ArrayCollection();
-        $this->updatedAt = new DateTimeImmutable();
-        $this->createdAt = new DateTimeImmutable();
+        $this->updated_at = new DateTimeImmutable();
+        $this->created_at = new DateTimeImmutable();
     }
 
     /**
@@ -74,7 +73,7 @@ class Picture
         if (null !== $imageFile) {
             // It is required that at least one field changes if you are using doctrine
             // otherwise the event listeners won't be called and the file is lost
-            $this->updatedAt = new DateTimeImmutable();
+            $this->updated_at = new DateTimeImmutable();
         }
     }
 
@@ -82,6 +81,7 @@ class Picture
     {
         return $this->imageFile;
     }
+
 
 
     public function getId(): ?int
@@ -113,26 +113,26 @@ class Picture
         return $this;
     }
 
-    public function getUpdatedAt(): ?DateTimeImmutable
+    public function getCreatedAt(): ?DateTimeInterface
     {
-        return $this->updatedAt;
+        return $this->created_at;
     }
 
-    public function setUpdatedAt(DateTimeImmutable $updatedAt): self
+    public function setCreatedAt(DateTimeInterface $created_at): self
     {
-        $this->updatedAt = $updatedAt;
+        $this->created_at = $created_at;
 
         return $this;
     }
 
-    public function getCreatedAt(): ?DateTimeImmutable
+    public function getUpdatedAt(): ?DateTimeInterface
     {
-        return $this->createdAt;
+        return $this->updated_at;
     }
 
-    public function setCreatedAt(DateTimeImmutable $createdAt): self
+    public function setUpdatedAt(?DateTimeInterface $updated_at): self
     {
-        $this->createdAt = $createdAt;
+        $this->updated_at = $updated_at;
 
         return $this;
     }
@@ -142,10 +142,6 @@ class Picture
     /**
      * @return Collection<int, Trick>
      */
-    public function getTricks(): Collection
-    {
-        return $this->tricks;
-    }
 
     public function addTrick(Trick $trick): self
     {
@@ -196,12 +192,12 @@ class Picture
         return $this;
     }
 
-    public function getTrick(): ?int
+    public function getTrick(): Trick
     {
         return $this->trick;
     }
 
-    public function setTrick(int $trick): self
+    public function setTrick(Trick $trick): self
     {
         $this->trick = $trick;
 
