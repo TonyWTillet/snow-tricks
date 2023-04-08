@@ -40,9 +40,10 @@ npm-watch: ## Update all npm dependencies
 
 ## —— 📊 Database ——
 database-init: ## Init database
-	$(SYMFONY_CONSOLE) d:d:c --if-not-exists
-	$(SYMFONY_CONSOLE) d:m:m
-
+	$(MAKE) database-drop
+	$(MAKE) database-create
+	$(MAKE) database-migrate
+	$(MAKE) database-fixtures-load
 
 database-drop: ## Create database
 	$(SYMFONY_CONSOLE) d:d:d --force --if-exists
@@ -53,11 +54,8 @@ database-create: ## Create database
 database-remove: ## Drop database
 	$(SYMFONY_CONSOLE) d:d:d --force --if-exists
 
-schema: ## Create migrations
-	$(SYMFONY_CONSOLE) d:s:c
-
 database-migration: ## Make migration
-	$(SYMFONY_CONSOLE) d:m:m
+	$(SYMFONY_CONSOLE) make:migration
 
 migration: ## Alias : database-migration
 	$(MAKE) database-migration
@@ -73,6 +71,7 @@ database-fixtures-load: ## Load fixtures
 
 fixtures: ## Alias : database-fixtures-load
 	$(MAKE) database-fixtures-load
+
 
 ## —— ✅ Test ——
 .PHONY: tests

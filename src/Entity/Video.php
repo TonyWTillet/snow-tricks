@@ -16,16 +16,13 @@ class Video
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(Types:: STRING, length: 255, nullable: false)]
+    #[ORM\ManyToOne(inversedBy: 'videos')]
+    private ?Trick $trick = null;
+
+    #[ORM\Column(length: 255, nullable: false)]
     private ?string $name = null;
 
-    #[ORM\ManyToMany(targetEntity: Trick::class, mappedBy: 'videos')]
-    private Collection $tricks;
 
-    public function __construct()
-    {
-        $this->tricks = new ArrayCollection();
-    }
 
     public function getId(): ?int
     {
@@ -40,7 +37,6 @@ class Video
     public function setName(string $name): self
     {
         $this->name = $name;
-
         return $this;
     }
 
@@ -67,6 +63,18 @@ class Video
         if ($this->tricks->removeElement($trick)) {
             $trick->removeVideo($this);
         }
+
+        return $this;
+    }
+
+    public function getTrick(): ?Trick
+    {
+        return $this->trick;
+    }
+
+    public function setTrick(?Trick $trick): self
+    {
+        $this->trick = $trick;
 
         return $this;
     }

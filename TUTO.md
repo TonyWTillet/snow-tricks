@@ -68,3 +68,11 @@
 - Installer le package avec la commande `composer require vich/uploader-bundle`
 - Ajouter la déclaration dans le fichier `config/bundles.php`
 - Ajouter la configuration dans le fichier `config/packages/vich_uploader.yaml`
+
+## Utiliser les Fixtures
+- Documentation : https://symfony.com/doc/current/bundles/DoctrineFixturesBundle/index.html
+- Installer le package avec la commande `composer require --dev orm-fixtures`
+- Installer Faker pour générer des données aléatoires avec la commande `composer require --dev fakerphp/faker`
+- Créer un fichier `src/DataFixtures/AppFixtures.php`
+- Ajouter la déclaration dans le fichier `config/bundles.php`
+- Exécutez la commande `php bin/console doctrine:fixtures:load` pour charger les fixtures

@@ -23,88 +23,23 @@
 
 
             <div class="row">
+
+                {% for trick in tricks %}
+                {{ dump(trick) }}
                 <div class="col-lg-4 col-md-6 mb-4">
                     <div class="post-entry-1 h-100">
-                        <a href="">
-                            <img src="{{ asset('images/img_1.jpg') }}" alt="Image"
+                        <a href="{{ trick.slug() }}">
+                            <img src="{{ asset('images/img_1.jpg') }}" alt="{{ trick.name() }}"
                                  class="img-fluid">
                         </a>
                         <div class="post-entry-1-contents">
 
-                            <h2><a href="">Lorem ipsum dolor sit amet</a></h2>
-                            <span class="meta d-inline-block mb-3">July 17, 2019 <span class="mx-2">by</span> <a href="#">Admin</a></span>
+                            <h2><a href="">{{ trick.name() }}</a></h2>
+                            <span class="meta d-inline-block mb-3">{{ trick.createdAt()|date('d/m/Y') }} <span class="mx-2">de</span> <a href="#">{{ 'User' }}</a></span>
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-4 col-md-6 mb-4">
-                    <div class="post-entry-1 h-100">
-                        <a href="">
-                            <img src="{{ asset('images/img_2.jpg') }}" alt="Image"
-                                 class="img-fluid">
-                        </a>
-                        <div class="post-entry-1-contents">
-
-                            <h2><a href="">Lorem ipsum dolor sit amet</a></h2>
-                            <span class="meta d-inline-block mb-3">July 17, 2019 <span class="mx-2">by</span> <a href="#">Admin</a></span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-lg-4 col-md-6 mb-4">
-                    <div class="post-entry-1 h-100">
-                        <a href="">
-                            <img src="{{ asset('images/img_3.jpg') }}" alt="Image"
-                                 class="img-fluid">
-                        </a>
-                        <div class="post-entry-1-contents">
-
-                            <h2><a href="">Lorem ipsum dolor sit amet</a></h2>
-                            <span class="meta d-inline-block mb-3">July 17, 2019 <span class="mx-2">by</span> <a href="#">Admin</a></span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-lg-4 col-md-6 mb-4">
-                    <div class="post-entry-1 h-100">
-                        <a href="">
-                            <img src="{{ asset('images/img_1.jpg') }}" alt="Image"
-                                 class="img-fluid">
-                        </a>
-                        <div class="post-entry-1-contents">
-
-                            <h2><a href="">Lorem ipsum dolor sit amet</a></h2>
-                            <span class="meta d-inline-block mb-3">July 17, 2019 <span class="mx-2">by</span> <a href="#">Admin</a></span>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6 mb-4">
-                    <div class="post-entry-1 h-100">
-                        <a href="">
-                            <img src="{{ asset('images/img_2.jpg') }}" alt="Image"
-                                 class="img-fluid">
-                        </a>
-                        <div class="post-entry-1-contents">
-
-                            <h2><a href="">Lorem ipsum dolor sit amet</a></h2>
-                            <span class="meta d-inline-block mb-3">July 17, 2019 <span class="mx-2">by</span> <a href="#">Admin</a></span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-lg-4 col-md-6 mb-4">
-                    <div class="post-entry-1 h-100">
-                        <a href="">
-                            <img src="{{ asset('images/img_3.jpg') }}" alt="Image"
-                                 class="img-fluid">
-                        </a>
-                        <div class="post-entry-1-contents">
-
-                            <h2><a href="">Lorem ipsum dolor sit amet</a></h2>
-                            <span class="meta d-inline-block mb-3">July 17, 2019 <span class="mx-2">by</span> <a href="#">Admin</a></span>
-                        </div>
-                    </div>
-                </div>
-
+                {% endfor %}
             </div>
 
 

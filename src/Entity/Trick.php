@@ -44,24 +44,23 @@ class Trick
 
     #[ORM\ManyToOne(inversedBy: 'tricks')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?category $category = null;
+    private ?Category $category = null;
 
     #[ORM\ManyToOne(inversedBy: 'tricks')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?user $user = null;
+    private ?User $user = null;
 
     #[ORM\OneToMany(mappedBy: 'trick', targetEntity: Comment::class)]
     private Collection $comments;
 
-    #[ORM\ManyToOne(inversedBy: 'tricks')]
-    private ?picture $default_picture = null;
+    #[ORM\OneToOne(inversedBy: 'tricks')]
+    private ?Picture $default_picture = null;
 
-    #[ORM\ManyToMany(targetEntity: video::class, inversedBy: 'tricks')]
-    private Collection $videos;
-
-    #[ORM\ManyToMany(targetEntity: picture::class, inversedBy: 'trick_pictures')]
+    #[ORM\OneToMany(mappedBy: 'trick', targetEntity: Picture::class)]
     private Collection $pictures;
 
+    #[ORM\OneToMany(mappedBy: 'trick', targetEntity: Video::class)]
+    private Collection $videos;
 
     public function __construct()
     {
@@ -71,7 +70,7 @@ class Trick
         $this->videos = new ArrayCollection();
         $this->pictures = new ArrayCollection();
     }
-
+    #[ORM\PrePersist]
     public function prePersist(): void
     {
         $this->slug = (new Slugify())->slugify($this->name);
@@ -146,12 +145,12 @@ class Trick
         return $this;
     }
 
-    public function getCategory(): ?category
+    public function getCategory(): ?Category
     {
         return $this->category;
     }
 
-    public function setCategory(?category $category): self
+    public function setCategory(?Category $category): self
     {
         $this->category = $category;
 
