@@ -44,17 +44,17 @@ class Trick
 
     #[ORM\ManyToOne(inversedBy: 'tricks')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?category $category = null;
+    private ?Category $category = null;
 
     #[ORM\ManyToOne(inversedBy: 'tricks')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?user $user = null;
+    private ?User $user = null;
 
     #[ORM\OneToMany(mappedBy: 'trick', targetEntity: Comment::class)]
     private Collection $comments;
 
     #[ORM\OneToOne(inversedBy: 'tricks')]
-    private ?picture $default_picture = null;
+    private ?Picture $default_picture = null;
 
     #[ORM\OneToMany(mappedBy: 'trick', targetEntity: Picture::class)]
     private Collection $pictures;
@@ -145,12 +145,12 @@ class Trick
         return $this;
     }
 
-    public function getCategory(): ?category
+    public function getCategory(): ?Category
     {
         return $this->category;
     }
 
-    public function setCategory(?category $category): self
+    public function setCategory(?Category $category): self
     {
         $this->category = $category;
 
