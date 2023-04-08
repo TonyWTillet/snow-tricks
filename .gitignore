@@ -15,8 +15,6 @@
 ###< phpunit/phpunit ###
 
 ###> symfony/phpunit-bridge ###
-.phpunit.result.cache
-/phpunit.xml
 ###< symfony/phpunit-bridge ###
 /templates/stablo-main.zip
 /templates/INT/stablo-main.zip
@@ -25,7 +23,12 @@
 
 ###> symfony/webpack-encore-bundle ###
 /node_modules/
-/public/build/
 npm-debug.log
 yarn-error.log
 ###< symfony/webpack-encore-bundle ###
+/.idea/
+/TUTO.md
+/public/build/app.css
+/public/build/app.js
+/public/build/runtime.js
+/public/build/vendors-node_modules_symfony_stimulus-bridge_dist_index_js-node_modules_core-js_modules_es_da-03e5c3.js
