@@ -39,6 +39,23 @@ class TrickRepository extends ServiceEntityRepository
         }
     }
 
+    public function findTrickWithRelations(mixed $limit = 18446744073709551615, mixed $offset = null): ?array
+    {
+        return $this->createQueryBuilder('t')
+            ->leftJoin('t.user', 'p')
+            ->leftJoin('t.category', 'c')
+            ->leftJoin('t.pictures', 'i')
+            ->addSelect('p')
+            ->addSelect('c')
+            ->addSelect('i')
+            ->setMaxResults($limit)
+            ->setFirstResult($offset)
+            ->orderBy('t.created_at', 'DESC')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
 //    /**
 //     * @return Post[] Returns an array of Post objects
 //     */
