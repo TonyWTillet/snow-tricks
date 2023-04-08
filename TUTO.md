@@ -54,3 +54,17 @@
 - https://symfony.com/doc/6.2/the-fast-track/fr/17-tests.html#ecrire-des-tests-unitaires
 - Créer la base de donnée de test : `php bin/console d:d:c --env=test`
 - Puis générer les migrations : `php bin/console d:m:m --env=test`
+
+## Installer Slugify pour générer des slugs
+- Installer le package avec la commande `composer require cocur/slugify`
+- Utiliser le package dans l'entité `src/Entity/Trick.php`
+- Ajouter une function `public function prePersist(): void { $this->slug = (new Slugify())->slugify($this->name); }`
+
+## UniqueEntity
+- https://symfony.com/doc/current/reference/constraints/UniqueEntity.html
+- Ajouter la contrainte `#[UniqueEntity(fields: ['champUnique'], message: 'Votre message.')]` dans une entité comme par exemple `src/Entity/Trick.php`
+
+## Installer VichUploader
+- Installer le package avec la commande `composer require vich/uploader-bundle`
+- Ajouter la déclaration dans le fichier `config/bundles.php`
+- Ajouter la configuration dans le fichier `config/packages/vich_uploader.yaml`
