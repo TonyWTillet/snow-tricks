@@ -11,7 +11,8 @@ use Faker\Factory;
 
 class PictureFixtures extends Fixture implements DependentFixtureInterface
 {
-    public const DEFAULT_IMAGE = 'default-image';
+    const IMG_DEFAULT_1 = 'rotation_cork_1.jpg';
+
     public function load(ObjectManager $manager): void
     {
         $faker = Factory::create('fr_FR');
@@ -81,7 +82,7 @@ class PictureFixtures extends Fixture implements DependentFixtureInterface
             $picture->setUpdatedAt($faker->dateTimeBetween('-3 months'));
             $manager->persist($picture);
         }
-        $this->setReference(self::DEFAULT_IMAGE, $picture);
+        $this->setReference(self::IMG_DEFAULT_1, $picture);
         $manager->flush();
     }
 
