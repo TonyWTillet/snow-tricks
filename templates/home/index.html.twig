@@ -17,15 +17,16 @@
         </div>
     </div>
 
+    <a class="ancor_tricks" href="#tricks"><i class="icon-arrow-down"></i></a>
 
     <div class="site-section">
-        <div class="container">
+        <div class="container" id="tricks">
 
 
             <div class="row">
 
                 {% for trick in tricks %}
-                <div class="col-lg-4 col-md-6 mb-4">
+                <div class="col-xl-3 col-lg-4 col-md-6 mb-4">
                     <div class="post-entry-1 h-100">
                         <a href="{{ trick.slug() }}">
                             <img src="{{ asset('images/img_1.jpg') }}" alt="{{ trick.name()|capitalize }}"

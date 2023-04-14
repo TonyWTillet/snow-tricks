@@ -22,9 +22,23 @@ class AppFixtures extends Fixture implements DependentFixtureInterface
     public const TRICK_8 = 'trick-8';
     public const TRICK_9 = 'trick-9';
 
+
     public function load(ObjectManager $manager): void
     {
         $faker = Factory::create('fr_FR');
+
+        $trickId = [
+            0 => self::TRICK_0,
+            1 => self::TRICK_1,
+            2 => self::TRICK_2,
+            3 => self::TRICK_3,
+            4 => self::TRICK_4,
+            5 => self::TRICK_5,
+            6 => self::TRICK_6,
+            7 => self::TRICK_7,
+            8 => self::TRICK_8,
+            9 => self::TRICK_9,
+        ];
 
         $trickFixtures = [
             0 => [
@@ -89,7 +103,7 @@ class AppFixtures extends Fixture implements DependentFixtureInterface
                 $trick->setCategory($this->getReference(CategoryFixtures::CATEGORY_EXPERIMENTE));
             }
             $trick->setDefaultPicture(null);
-            $this->setReference(self::TRICK_0, $trick);
+            $this->setReference($trickId[$i], $trick);
             $manager->persist($trick);
         }
 
