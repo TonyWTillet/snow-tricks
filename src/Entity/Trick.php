@@ -50,11 +50,12 @@ class Trick
     #[ORM\JoinColumn(nullable: false)]
     private ?User $user = null;
 
+    #[ORM\OneToOne(inversedBy: 'trick')]
+    #[ORM\JoinColumn(nullable: true)]
+    private ?Picture $default_picture = null;
+
     #[ORM\OneToMany(mappedBy: 'trick', targetEntity: Comment::class)]
     private Collection $comments;
-
-    #[ORM\OneToOne(inversedBy: 'tricks')]
-    private ?Picture $default_picture = null;
 
     #[ORM\OneToMany(mappedBy: 'trick', targetEntity: Picture::class)]
     private Collection $pictures;
