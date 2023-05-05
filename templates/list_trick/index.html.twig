@@ -1,0 +1,58 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Bienvenue sur Snow Tricks{% endblock %}
+
+
+{% block body %}
+    <div class="ftco-blocks-cover-1">
+        <div class="site-section-cover overlay" style="background-image: url('{{ asset('images/banner_list.jpg') }}')">
+            <div class="container">
+                <div class="row align-items-center justify-content-center text-center">
+                    <div class="col-md-5" data-aos="fade-up">
+                        <h1 class="mb-3 text-white">Liste des Tricks</h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <a class="ancor_tricks" href="#list_tricks"><i class="icon-arrow-down"></i></a>
+
+    <div class="site-section">
+        <div class="container" id="list_tricks">
+
+
+            <div class="row">
+                {{ dump(tricks) }}
+                {% for trick in tricks %}
+
+                    <div class="col-xl-3 col-lg-4 col-md-6 mb-4">
+                        <div class="post-entry-1 h-100">
+                            <a href="{{ trick.slug() }}">
+                                <img src="{{ asset('images/tricks/') ~ trick.default_picture.name }}" alt="{{ trick.name()|capitalize }}"
+                                     class="img-fluid">
+                            </a>
+                            <div class="post-entry-1-contents">
+
+                                <h2><a href="">{{ trick.name() }}</a></h2>
+                                <span class="meta d-inline-block mb-1">{{ trick.createdAt()|date('d/m/Y') }}
+                                <span class="mx-2">de</span>
+                                <a href="#">{{ trick.user.pseudo|capitalize }}</a>
+                            </span>
+                                <span class="meta d-inline-block mb-3">Catégorie :
+                                <a href="{{ trick.category.name }}">{{ trick.category.name|capitalize }}</a>
+                            </span>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+
+
+            <div class="col-12 mt-5 text-center">
+                <button class="p-3 btn btn-primary">Load More</button>
+            </div>
+
+        </div>
+    </div>
+{% endblock %}

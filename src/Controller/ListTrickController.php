@@ -7,15 +7,14 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-class HomeController extends AbstractController
+class ListTrickController extends AbstractController
 {
-    #[Route('/', name: 'app_home', methods : ['GET'])]
+    #[Route('/tricks', name: 'app_list_trick')]
     public function index(TrickRepository $trickRepository): Response
     {
-        return $this->render('home/index.html.twig', [
-            $tricks = $trickRepository->findTrickWithRelations(20, 0),
+        return $this->render('list_trick/index.html.twig', [
+            $tricks = $trickRepository->findTrickWithRelations(99, 0),
             'tricks' => $tricks,
         ]);
-
     }
 }
