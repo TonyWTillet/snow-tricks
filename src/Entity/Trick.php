@@ -52,7 +52,7 @@ class Trick
 
     #[ORM\OneToOne(inversedBy: 'trick')]
     #[ORM\JoinColumn(nullable: true)]
-    private ?Picture $default_picture = null;
+    private ?Picture $defaultPicture = null;
 
     #[ORM\OneToMany(mappedBy: 'trick', targetEntity: Comment::class)]
     private Collection $comments;
@@ -170,14 +170,14 @@ class Trick
         return $this;
     }
 
-    public function getdefault_picture(): ?picture
+    public function getdefaultPicture(): ?picture
     {
-        return $this->default_picture;
+        return $this->defaultPicture;
     }
 
-    public function setdefault_picture(?picture $default_picture): self
+    public function setdefaultPicture(?picture $defaultPicture): self
     {
-        $this->default_picture = $default_picture;
+        $this->defaultPicture = $defaultPicture;
 
         return $this;
     }
