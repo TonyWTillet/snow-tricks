@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello LoginController!{% endblock %}
+
+{% block body %}
+<div class="container login">
+    <div class="row">
+        <div class="col-12">
+            <div class="comment-form-wrap pt-5">
+                <h3 class="mb-5">Se connecter</h3>
+                <form method="post" class="">
+                    <div class="form-group">
+                        <label for="email">Email *</label>
+                        <input type="text" name="email" class="form-control" id="email">
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Mot de passe *</label>
+                        <input type="password" name="password" class="form-control" id="password">
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" value="S" class="btn btn-primary btn-md text-white">Se connecter</button>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

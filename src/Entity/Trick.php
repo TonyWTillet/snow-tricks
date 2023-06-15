@@ -46,13 +46,12 @@ class Trick
     #[ORM\JoinColumn(nullable: false)]
     private ?Category $category = null;
 
-    #[ORM\ManyToOne(inversedBy: 'tricks')]
+    #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'tricks')]
     #[ORM\JoinColumn(nullable: false)]
     private ?User $user = null;
 
-    #[ORM\OneToOne(inversedBy: 'trick')]
-    #[ORM\JoinColumn(nullable: true)]
-    private ?Picture $default_picture = null;
+    #[ORM\OneToOne(inversedBy: 'trick'), ORM\JoinColumn(nullable: true)]
+    private ?Picture $defaultPicture = null;
 
     #[ORM\OneToMany(mappedBy: 'trick', targetEntity: Comment::class)]
     private Collection $comments;
@@ -170,6 +169,18 @@ class Trick
         return $this;
     }
 
+    public function getdefaultPicture(): ?picture
+    {
+        return $this->defaultPicture;
+    }
+
+    public function setdefaultPicture(?picture $defaultPicture): self
+    {
+        $this->defaultPicture = $defaultPicture;
+
+        return $this;
+    }
+
     /**
      * @return Collection<int, Comment>
      */
@@ -196,18 +207,6 @@ class Trick
                 $comment->setTrick(null);
             }
         }
-
-        return $this;
-    }
-
-    public function getDefaultPicture(): ?picture
-    {
-        return $this->default_picture;
-    }
-
-    public function setDefaultPicture(?picture $default_picture): self
-    {
-        $this->default_picture = $default_picture;
 
         return $this;
     }

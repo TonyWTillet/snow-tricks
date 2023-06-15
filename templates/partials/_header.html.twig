@@ -17,7 +17,7 @@
             <div class="col-3 ">
                 <div class="site-logo">
                     <a href="{{ path('app_home') }}" class="font-weight-bold">
-                        <img src="{{ asset('images/logo.png') }}" alt="Image" class="img-fluid">
+                        <img src="{{ asset('images/logo.png') }}" alt="SnowTricks" class="img-fluid">
                     </a>
                 </div>
             </div>
@@ -31,10 +31,10 @@
 
                 <nav class="site-navigation text-right ml-auto d-none d-lg-block" role="navigation">
                     <ul class="site-menu main-menu js-clone-nav ml-auto ">
-                        <li class="active"><a href="{{ path('app_home') }}" class="nav-link">Accueil</a></li>
-                        <li><a href="{{ path('app_list_trick') }}" class="nav-link">Tricks</a></li>
-                        <li><a href="trips.html" class="nav-link">Sign In</a></li>
-                        <li ><a href="blog.html" class="nav-link">Sign Up</a></li>
+                        <li class="{% if currentUrl == '/'  %} active {% endif %}"><a href="{{ path('app_home') }}" class="nav-link">Accueil</a></li>
+                        <li class="{% if path('app_list_trick') in currentUrl %} active {% endif %}"><a href="{{ path('app_list_trick') }}" class="nav-link">Tricks</a></li>
+                        <li class="{% if path('app_login') in currentUrl %} active {% endif %}"><a href="{{ path('app_login') }}" class="nav-link">Login</a></li>
+                        <li class="{% if path('app_signin') in currentUrl %} active {% endif %}"><a href="{{ path('app_signin') }}" class="nav-link">Sign Up</a></li>
                     </ul>
                 </nav>
             </div>

@@ -44,8 +44,6 @@ class User
     private ?DateTimeInterface $updated_at;
 
 
-
-
     #[ORM\OneToOne(mappedBy: 'user', cascade: ['persist', 'remove'])]
     private ?Token $token = null;
 

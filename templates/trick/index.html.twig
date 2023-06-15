@@ -3,18 +3,96 @@
 {% block title %}SnowTricks{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+    
+    <div class="ftco-blocks-cover-1">
+        <div class="site-section-cover overlay" data-stellar-background-ratio="0.5" style="background-image: url({{ asset('images/tricks/') ~ trick.defaultPicture.name }})">
+            <div class="container">
+                <div class="row align-items-center justify-content-center text-center">
+                    <div class="col-md-7">
+                        <span class="d-block mb-3 text-white" data-aos="fade-up">{{ trick.updatedAt()|date('d/m/Y') }}
+                            <span class="mx-2 text-primary">&bullet;</span> de {{ trick.getUser().pseudo|capitalize }}
+                        </span>
+                        <h1 class="mb-4" data-aos="fade-up" data-aos-delay="100">{{ trick.name() }}</h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+    <div class="site-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8 blog-content">
+                    <p class="lead">Catégorie : {{ trick.category.name|capitalize }}</p>
+                    <p>{{ trick.content() }}</p>
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ 'C:/laragon/www/snow-tricks/src/Controller/TrickController.php'|file_link(0) }}">src/Controller/TrickController.php</a></code></li>
-        <li>Your template at <code><a href="{{ 'C:/laragon/www/snow-tricks/templates/trick/index.html.twig'|file_link(0) }}">templates/trick/index.html.twig</a></code></li>
-    </ul>
-</div>
+                    <div class="pt-5">
+                        <h3 class="mb-5">Comentaires</h3>
+                        <ul class="comment-list">
+                            {% for comment in trick.comments() %}
+                            <li class="comment">
+                                <div class="vcard bio">
+                                    <img src="images/person_2.jpg" alt="Image">
+                                </div>
+                                <div class="comment-body">
+                                    <h3>{#{{ comment.user.pseudo }}#}</h3>
+                                    <div class="meta">{{ comment.createdAt()|date('d/m/Y') }}</div>
+                                    <p>{{ comment.content() }}</p>
+                                </div>
+                            </li>
+                            {% endfor %}
+
+                        </ul>
+                        <!-- END comment-list -->
+
+                        <div class="comment-form-wrap pt-5">
+                            <h3 class="mb-5">Laisser un commentaire</h3>
+                            <form method="post" class="">
+                                <div class="form-group">
+                                    <label for="name">Nom *</label>
+                                    <input type="text" class="form-control" id="name">
+                                </div>
+                                <div class="form-group">
+                                    <label for="email">Prénom *</label>
+                                    <input type="email" class="form-control" id="email">
+                                </div>
+                                <div class="form-group">
+                                    <label for="email">Email *</label>
+                                    <input type="email" class="form-control" id="email">
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="message">Message</label>
+                                    <textarea name="" id="message" cols="30" rows="10" class="form-control"></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <input type="submit" value="Commenter" class="btn btn-primary btn-md text-white">
+                                </div>
+
+                            </form>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="col-md-4 sidebar">
+                    <div class="sidebar-box">
+                        <div class="categories">
+                            <h3>Dernier articles</h3>
+                            <li><a href="#">Creatives </a></li>
+                            <li><a href="#">News</a></li>
+                            <li><a href="#">Design </a></li>
+                            <li><a href="#">HTML </a></li>
+                            <li><a href="#">Web Development </a></li>
+                        </div>
+                    </div>
+
+                    <div class="sidebar-box">
+                        <h3 class="text-black">Voir tout nos Tricks</h3>
+                        <p><a href="{{path('app_list_trick')}}" class="btn btn-primary btn-md text-white">En voir plus</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
 {% endblock %}
