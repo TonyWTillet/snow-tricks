@@ -9,6 +9,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -16,7 +17,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[ORM\HasLifecycleCallbacks]
 #[UniqueEntity(fields: ['email'], message: 'L\'email est déjà utilisé.')]
 #[UniqueEntity(fields: ['pseudo'], message: 'Le pseudo est déjà utilisé.')]
-class User implements UserInterface, \Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface
+class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     const USER_PERMISSIONS = ['ROLE_USER', 'ROLE_ADMIN'];
 
@@ -225,16 +226,16 @@ class User implements UserInterface, \Symfony\Component\Security\Core\User\Passw
 
     public function getRoles(): array
     {
-        // TODO: Implement getRoles() method.
+        return ['ROLE_USER'];
     }
 
-    public function eraseCredentials()
+    public function eraseCredentials(): void
     {
-        // TODO: Implement eraseCredentials() method.
+        $this->password = null;
     }
 
     public function getUserIdentifier(): string
     {
-        // TODO: Implement getUserIdentifier() method.
+        return $this->email;
     }
 }
