@@ -14,8 +14,6 @@ security:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
         main:
-            stateless: true
-            pattern: ^/
             lazy: true
             provider:  user_provider
             custom_authenticator: App\Security\LoginFormAuthenticator
