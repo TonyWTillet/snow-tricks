@@ -18,7 +18,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[ORM\HasLifecycleCallbacks]
 #[UniqueEntity(fields: ['email'], message: 'L\'email est déjà utilisé.')]
 #[UniqueEntity(fields: ['pseudo'], message: 'Le pseudo est déjà utilisé.')]
-class User implements UserInterface, PasswordAuthenticatedUserInterface, EquatableInterface
+class User implements UserInterface, PasswordAuthenticatedUserInterface, EquatableInterface, Ser
 {
     const USER_PERMISSIONS = ['ROLE_USER', 'ROLE_ADMIN'];
 
