@@ -18,7 +18,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[ORM\HasLifecycleCallbacks]
 #[UniqueEntity(fields: ['email'], message: 'L\'email est déjà utilisé.')]
 #[UniqueEntity(fields: ['pseudo'], message: 'Le pseudo est déjà utilisé.')]
-class User implements UserInterface, PasswordAuthenticatedUserInterface, EquatableInterface, Ser
+class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     const USER_PERMISSIONS = ['ROLE_USER', 'ROLE_ADMIN'];
 
@@ -240,7 +240,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, Equatab
         return $this->email;
     }
 
-    public function isEqualTo(UserInterface $user): bool
+    /*public function isEqualTo(UserInterface $user): bool
     {
         if ($this->password !== $user->getPassword()) {
             return false;
@@ -251,5 +251,5 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, Equatab
         }
 
         return true;
-    }
+    }*/
 }
