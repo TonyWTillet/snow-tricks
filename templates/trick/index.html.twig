@@ -35,7 +35,7 @@
                                     <img src="images/person_2.jpg" alt="Image">
                                 </div>
                                 <div class="comment-body">
-                                    <h3>{#{{ comment.user.pseudo }}#}</h3>
+                                    <h3>{{ comment.user.pseudo }}</h3>
                                     <div class="meta">{{ comment.createdAt()|date('d/m/Y') }}</div>
                                     <p>{{ comment.content() }}</p>
                                 </div>
@@ -47,29 +47,25 @@
 
                         <div class="comment-form-wrap pt-5">
                             <h3 class="mb-5">Laisser un commentaire</h3>
-                            <form method="post" class="">
+                            {{ form_start(commentForm) }}
                                 <div class="form-group">
-                                    <label for="name">Nom *</label>
-                                    <input type="text" class="form-control" id="name">
+                                    {{ form_errors(commentForm.user) }}
+                                    {{ form_errors(commentForm.content) }}
+                                    {{ form_errors(commentForm.trick) }}
+                                    {{ form_errors(commentForm.created_at) }}
                                 </div>
-                                <div class="form-group">
-                                    <label for="email">Prénom *</label>
-                                    <input type="email" class="form-control" id="email">
-                                </div>
-                                <div class="form-group">
-                                    <label for="email">Email *</label>
-                                    <input type="email" class="form-control" id="email">
-                                </div>
-
+                                <input type="hidden" value="1" name="{{ field_name(commentForm.user) }}">
+                                <input type="hidden" value="{{ trick.id() }}" name="{{ field_name(commentForm.trick) }}">
+                                {{ form_widget(commentForm.created_at, {'attr': {'style': 'display:none'}}) }}
+                                <input type="hidden" id="commentForm__token" name="commentForm[_token]" value="DwqsEanxc48jofxsqbGBVLQBqlVJ_Tg4u9-BL1Hjgac" />
                                 <div class="form-group">
                                     <label for="message">Message</label>
-                                    <textarea name="" id="message" cols="30" rows="10" class="form-control"></textarea>
+                                    <textarea name="{{ field_name(commentForm.content) }}" id="message" cols="30" rows="10" class="form-control" required></textarea>
                                 </div>
                                 <div class="form-group">
-                                    <input type="submit" value="Commenter" class="btn btn-primary btn-md text-white">
+                                    <button type="submit" value="S" class="btn btn-primary btn-md text-white">Envoyer</button>
                                 </div>
-
-                            </form>
+                            {{ form_end(commentForm) }}
                         </div>
                     </div>
 
@@ -78,7 +74,7 @@
                     <div class="sidebar-box">
                         <div class="categories">
                             <h3>Dernier articles</h3>
-                            <li><a href="#">Creatives </a></li>
+                            <li><a href="#">Creatives</a></li>
                             <li><a href="#">News</a></li>
                             <li><a href="#">Design </a></li>
                             <li><a href="#">HTML </a></li>
