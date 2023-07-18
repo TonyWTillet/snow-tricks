@@ -16,10 +16,10 @@ security:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
         main:
+            stateless: true
             lazy: true
             provider:  user_provider
             custom_authenticator: App\Security\LoginFormAuthenticator
-
             logout:
                 path: app_logout
                 # where to redirect after logout
@@ -34,11 +34,11 @@ security:
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     role_hierarchy:
-        ROLE_USER: ROLE_USER
         ROLE_ADMIN: ROLE_ADMIN
+        ROLE_USER: ROLE_USER
+
     access_control:
          - { path: ^/admin, roles: ROLE_ADMIN }
-         - { path: ^/profile, roles: ROLE_USER }
 
 when@test:
     security:
