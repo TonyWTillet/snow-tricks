@@ -7,6 +7,7 @@
         <meta name="author" content="Tony Tillet">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link href="https://fonts.googleapis.com/css?family=Work+Sans:400,700,900&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
         {# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
         {% block stylesheets %}
             {{ encore_entry_link_tags('app') }}
@@ -34,6 +35,7 @@
 
         {% block javascripts %}
             {{ encore_entry_script_tags('app') }}
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js" integrity="sha512-fD9DI5bZwQxOi7MhYWnnNPlvXdp/2Pj3XSTRrFs5FQa4mizyGLnJcN6tuvUS6LbmgN1ut+XGSABKvjN0H6Aoow==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
             <script src="{{ asset('js/jquery-3.3.1.min.js') }}"></script>
             <script src="{{ asset('js/jquery-migrate-3.0.0.js') }}"></script>
             <script src="{{ asset('js/popper.min.js') }}"></script>
@@ -47,7 +49,6 @@
             <script src="{{ asset('js/bootstrap-datepicker.min.js') }}"></script>
             <script src="{{ asset('js/isotope.pkgd.min.js') }}"></script>
             <script src="{{ asset('js/aos.js') }}"></script>
-
             <script src="{{ asset('js/main.js') }}"></script>
         {% endblock %}
     </body>
