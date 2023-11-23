@@ -227,12 +227,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function getRoles(): array
     {
-        return ['ROLE_USER'];
+        return [$this->role];
     }
 
     public function eraseCredentials(): void
     {
-        $this->password = null;
+        //$this->password = null;
     }
 
     public function getUserIdentifier(): string

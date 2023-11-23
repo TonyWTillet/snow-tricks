@@ -13,8 +13,10 @@
                             <span class="mx-2 text-primary">&bullet;</span> de {{ trick.getUser().pseudo|capitalize }}
                         </span>
                         <h1 class="mb-4" data-aos="fade-up" data-aos-delay="100">{{ trick.name() }}</h1>
-                        <a href="{{ path('app_home') }}?trick={{ trick.slug() }}"><i class="fa-solid fa-pen-to-square" style="font-size: 20px;"></i></a>
-                        <a href="{{ path('app_home') }}?trick={{ trick.slug() }}"><i class="fa-solid fa-trash" style="font-size: 20px; margin-left: 10px"></i></a>
+                        {% if app.user.id == trick.getUser().id %}
+                        <a data-aos="fade-up" data-aos-delay="110" href="{{ path('app_home') }}?trick={{ trick.slug() }}"><i class="fa-solid fa-pen-to-square" style="font-size: 20px;"></i></a>
+                        <a data-aos="fade-up" data-aos-delay="110" href="{{ path('app_home') }}?trick={{ trick.slug() }}"><i class="fa-solid fa-trash" style="font-size: 20px; margin-left: 10px"></i></a>
+                        {% endif %}
                     </div>
                 </div>
             </div>
