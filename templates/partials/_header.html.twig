@@ -35,6 +35,7 @@
                         <li class="{% if path('app_list_trick') in currentUrl %} active {% endif %}"><a href="{{ path('app_list_trick') }}" class="nav-link">Tricks</a></li>
                         {% if app.user %}
                         <li class="{% if path('app_list_trick') in currentUrl %} active {% endif %}"><a href="{{ path('app_list_trick') }}" class="nav-link">Ajouter un Trick</a></li>
+                        <li class="{% if path('app_users') in currentUrl %} active {% endif %}"><a href="{{ path('app_users') }}" class="nav-link">Mes informations</a></li>
                         <li class="{% if path('app_logout') in currentUrl %} active {% endif %}"><a href="{{ path('app_logout') }}" class="nav-link">Se déconnecter</a></li>
                         {% endif %}
                         {% if app.user is empty %}
