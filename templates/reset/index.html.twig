@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Connexion{% endblock %}
+
+{% block body %}
+<div class="container login">
+    <div class="row">
+        <div class="col-12">
+            <div class="comment-form-wrap pt-5 pb-5">
+                <form method="post">
+                   {# {% if error %}
+                        <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+                    {% endif %}#}
+
+                    <h1 class="h3 mb-3 font-weight-normal">Mot de passe oublié</h1>
+                    <div class="form-group">
+                        <label for="inputEmail">Pseudo</label>
+                        <input type="text" value="" name="pseudo" id="inputPseudo" class="form-control" autocomplete="pseudo" required autofocus>
+                    </div>
+
+
+                    <button class="btn btn-primary btn-md text-white" type="submit">
+                        réinitialiser
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
