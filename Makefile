@@ -4,6 +4,7 @@ COMPOSER = composer
 NPM = npm
 SYMFONY_CONSOLE = PHP bin/console
 SYMFONY_CLI = symfony
+MAKE = make
 
 # Colors
 GREEN = /bin/echo -e "\x1b[32m\#\# $1\x1b[0m"
