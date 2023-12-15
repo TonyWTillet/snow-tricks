@@ -77,6 +77,7 @@ class PictureFixtures extends Fixture implements DependentFixtureInterface
             $picture = new Picture();
             $picture->setName($images[$i]['name']);
             $picture->setAlt($images[$i]['alt']);
+            $picture->setIsDefault(1);
             $picture->setTrick($this->getReference($trickId[$i]));
             $picture->setCreatedAt($faker->dateTimeBetween('-6 months'));
             $picture->setUpdatedAt($faker->dateTimeBetween('-3 months'));

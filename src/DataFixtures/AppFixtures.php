@@ -102,7 +102,6 @@ class AppFixtures extends Fixture implements DependentFixtureInterface
             else {
                 $trick->setCategory($this->getReference(CategoryFixtures::CATEGORY_EXPERIMENTE));
             }
-            $trick->setDefaultPicture(null);
             $this->setReference($trickId[$i], $trick);
             $manager->persist($trick);
         }
