@@ -12,7 +12,7 @@
                             <span class="mx-2 text-primary">&bullet;</span> de {{ trick.getUser().pseudo|capitalize }}
                         </span>
                         <h1 class="mb-4" data-aos="fade-up" data-aos-delay="100">{{ trick.name() }}</h1>
-                        {% if app.user.id is defined and  app.user.id == trick.getUser().id %}
+                        {% if app.user.id is defined and  app.user.id == trick.getUser().id and app.user.isVerified == true %}
                         <a data-aos="fade-up" data-aos-delay="110" href="{{ path('app_home') }}?trick={{ trick.slug() }}"><i class="fa-solid fa-pen-to-square" style="font-size: 20px;"></i></a>
                         <a data-aos="fade-up" data-aos-delay="110" href="{{ path('app_home') }}?trick={{ trick.slug() }}"><i class="fa-solid fa-trash" style="font-size: 20px; margin-left: 10px"></i></a>
                         {% endif %}
@@ -47,7 +47,7 @@
 
                         </ul>
                         <!-- END comment-list -->
-
+                        {% if app.user and app.user.isVerified == true %}
                         <div class="comment-form-wrap pt-5">
                             <h3 class="mb-5">Laisser un commentaire</h3>
                             {{ form_start(commentForm) }}
@@ -70,6 +70,7 @@
                                 </div>
                             {{ form_end(commentForm) }}
                         </div>
+                        {% endif %}
                     </div>
 
                 </div>

@@ -1,0 +1,6 @@
+<img src="{{ absolute_url(asset('images/logo.png' | raw)) }}" alt="Logo SnowTricks" width="200" height="200">
+<h1>Activer votre compte</h1>
+<p>Bienvenue {{ user.pseudo }},</p>
+<p>Merci de vous être inscrit sur SnowTricks.</p>
+<p>Pour terminer l'inscription, activez votre compte via le lien ci-dessous. Ce lien expirera dans 3 heures.</p>
+<p><a class="btn-dark" href="{{ absolute_url(path('app_activate', {'token': token})) }}">Activer mon compte</a></p>

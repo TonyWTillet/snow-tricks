@@ -34,7 +34,8 @@
                         <li class="{% if currentUrl == '/'  %} active {% endif %}"><a href="{{ path('app_home') }}" class="nav-link">Accueil</a></li>
                         <li class="{% if path('app_list_trick') in currentUrl %} active {% endif %}"><a href="{{ path('app_list_trick') }}" class="nav-link">Tricks</a></li>
                         {% if app.user %}
-                        <li class="{% if path('app_list_trick') in currentUrl %} active {% endif %}"><a href="{{ path('app_list_trick') }}" class="nav-link">Ajouter un Trick</a></li>
+
+                        <li class="{% if path('app_list_trick') in currentUrl %} active {% endif %}"><a href="{{ path('app_list_trick') }}" class="nav-link {% if app.user.isVerified == false %} disabled {% endif %}" >Ajouter un Trick</a></li>
                         <li class="{% if path('app_users_edit') in currentUrl %} active {% endif %}"><a href="{{ path('app_users_edit') }}" class="nav-link">Mes informations</a></li>
                         <li class="{% if path('app_logout') in currentUrl %} active {% endif %}"><a href="{{ path('app_logout') }}" class="nav-link">Se déconnecter</a></li>
                         {% endif %}

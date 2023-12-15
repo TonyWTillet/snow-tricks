@@ -37,6 +37,7 @@ class UserFixtures extends Fixture
             $user->setEmail($userFixtures[$u]['email']);
             $user->setPassword($userFixtures[$u]['password']);
             $user->setRole($userFixtures[$u]['role']);
+            $user->setIsVerified(1);
             $user->setCreatedAt($faker->dateTimeBetween('-6 months'));
             $user->setUpdatedAt($faker->dateTimeBetween('-6 months'));
             if ($u < 1) {

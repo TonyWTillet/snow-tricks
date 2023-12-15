@@ -39,6 +39,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 255, unique: true, nullable: false)]
     private ?string $pseudo = null;
 
+    #[ORM\Column(options: ["default" => 0])]
+    private ?bool $is_verified = false;
+
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     #[Assert\NotNull]
     private ?DateTimeInterface $created_at;
@@ -238,6 +241,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function getUserIdentifier(): string
     {
         return $this->email;
+    }
+
+    public function getIsVerified(): ?bool
+    {
+        return $this->is_verified;
+    }
+
+    public function setIsVerified(bool $is_verified): self
+    {
+        $this->is_verified = $is_verified;
+
+        return $this;
     }
 
     /*public function isEqualTo(UserInterface $user): bool
