@@ -156,7 +156,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->token;
     }
 
-    public function setToken(Token $token): self
+    public function setToken(Token $token): ?self
     {
         // set the owning side of the relation if necessary
         if ($token->getUser() !== $this) {
