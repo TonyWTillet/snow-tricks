@@ -1934,7 +1934,9 @@ h1, h2, h3, h4, h5,
     bottom: -20px;
     right: -20px; }
 
-
+.site-navbar .site-navigation .site-menu > li > a.disabled {
+  color: #6c757d!important;
+}
 
 .login {
 

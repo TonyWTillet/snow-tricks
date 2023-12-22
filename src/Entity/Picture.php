@@ -37,6 +37,10 @@ class Picture
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $alt = null;
+
+    #[ORM\Column(options: ["default" => 0])]
+    private ?bool $is_default = false;
+
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     #[Assert\NotNull]
     private ?DateTimeInterface $created_at;
@@ -44,6 +48,8 @@ class Picture
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     #[Assert\NotNull]
     private ?DateTimeInterface $updated_at;
+
+
 
     #[ORM\PreUpdate]
     public function preUpdate(): void
@@ -200,6 +206,18 @@ class Picture
     public function setTrick(Trick $trick): self
     {
         $this->trick = $trick;
+
+        return $this;
+    }
+
+    public function getIsDefault(): ?bool
+    {
+        return $this->is_default;
+    }
+
+    public function setIsDefault(bool $is_default): self
+    {
+        $this->is_default = $is_default;
 
         return $this;
     }

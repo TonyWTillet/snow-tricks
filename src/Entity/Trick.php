@@ -50,9 +50,6 @@ class Trick
     #[ORM\JoinColumn(nullable: false)]
     private ?User $user = null;
 
-    #[ORM\OneToOne(inversedBy: 'trick'), ORM\JoinColumn(nullable: true)]
-    private ?Picture $defaultPicture = null;
-
     #[ORM\OneToMany(mappedBy: 'trick', targetEntity: Comment::class)]
     private Collection $comments;
 
@@ -169,17 +166,7 @@ class Trick
         return $this;
     }
 
-    public function getdefaultPicture(): ?picture
-    {
-        return $this->defaultPicture;
-    }
 
-    public function setdefaultPicture(?picture $defaultPicture): self
-    {
-        $this->defaultPicture = $defaultPicture;
-
-        return $this;
-    }
 
     /**
      * @return Collection<int, Comment>
@@ -252,11 +239,44 @@ class Trick
         return $this;
     }
 
+
     public function removePicture(picture $picture): self
     {
         $this->pictures->removeElement($picture);
 
         return $this;
+    }
+
+    /**
+     * Get the default picture for the trick.
+     *
+     * @return Picture|null
+     */
+    public function getDefaultPicture(): ?Picture
+    {
+        foreach ($this->pictures as $picture) {
+            if ($picture->getIsDefault()) {
+                return $picture;
+            }
+        }
+
+        return null; // Si aucune image n'a is_default à 1
+    }
+
+    /**
+     * Set the default picture for the trick.
+     *
+     * @param Picture|null $defaultPicture
+     */
+    public function setDefaultPicture(?Picture $defaultPicture): void
+    {
+        foreach ($this->pictures as $picture) {
+            if ($picture === $defaultPicture) {
+                $picture->setIsDefault(true);
+            } else {
+                $picture->setIsDefault(false);
+            }
+        }
     }
 
     public function __toString(): string

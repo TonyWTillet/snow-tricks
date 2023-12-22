@@ -1,0 +1,11 @@
+{# afffichage flash #}
+{%  for label, messages in app.flashes %}
+    {% for message in messages %}
+        <div class="alert alert-{{ label }} alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="close" aria-hidden="true">×</button>
+            <div class="alert-message">
+                {{ message }}
+            </div>
+        </div>
+    {% endfor %}
+{% endfor %}

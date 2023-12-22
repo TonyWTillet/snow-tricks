@@ -2,8 +2,10 @@
 
 namespace App\Repository;
 
+use App\Entity\Token;
 use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -37,6 +39,17 @@ class UserRepository extends ServiceEntityRepository
         if ($flush) {
             $this->getEntityManager()->flush();
         }
+    }
+
+    public function removeToken(Token $token, EntityManagerInterface $entityManager): void
+    {
+        $query = $entityManager->createQuery('
+            DELETE FROM App\Entity\Token t
+            WHERE t = :token
+        ');
+
+        $query->setParameter('token', $token);
+        $query->execute();
     }
 
 //    /**

@@ -24,8 +24,11 @@
             {% block header %}
                 {% include 'partials/_header.html.twig' %}
             {% endblock %}
+            {{ include('partials/_isVerifiedUser.html.twig') }}
+            {{ include('partials/_flash.html.twig') }}
+            {% block body %}
 
-            {% block body %}{% endblock %}
+            {% endblock %}
 
             {% block footer %}
                 {% include 'partials/_footer.html.twig' %}
