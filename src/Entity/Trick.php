@@ -51,6 +51,7 @@ class Trick
     private ?User $user = null;
 
     #[ORM\OneToMany(mappedBy: 'trick', targetEntity: Comment::class)]
+    #[ORM\OrderBy(["created_at" => "DESC"])]
     private Collection $comments;
 
     #[ORM\OneToMany(mappedBy: 'trick', targetEntity: Picture::class)]
