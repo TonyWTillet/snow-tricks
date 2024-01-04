@@ -68,4 +68,16 @@ class TrickController extends AbstractController
         $this->addFlash('success', 'La suppression du trick a été effectuée avec succès.');
         return $this->redirectToRoute('app_list_trick');
     }
+
+    #[Route('/trick/edit/{id}', name: 'app_edit_trick', methods : ['GET', 'POST'])]
+    public function edit(Trick $trick): Response
+    {
+
+    }
+
+    #[Route('/trick/add', name: 'app_add_trick', methods : ['GET', 'POST'])]
+    public function add(): Response
+    {
+
+    }
 }
