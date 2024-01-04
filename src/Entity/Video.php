@@ -17,6 +17,7 @@ class Video
     private ?int $id = null;
 
     #[ORM\ManyToOne(inversedBy: 'videos')]
+    #[ORM\JoinColumn(onDelete: 'cascade')]
     private ?Trick $trick = null;
 
     #[ORM\Column(length: 255, nullable: false)]
