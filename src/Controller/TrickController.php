@@ -5,16 +5,19 @@ namespace App\Controller;
 use App\Entity\Comment;
 use App\Entity\Trick;
 use App\Form\CommentType;
+use App\Form\TrickFormType;
 use App\Repository\CommentRepository;
 use App\Repository\TrickRepository;
 use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\NotFoundExceptionInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\String\Slugger\SluggerInterface;
 
 class TrickController extends AbstractController
 {
@@ -52,6 +55,108 @@ class TrickController extends AbstractController
             'trick' => $trick,
             'currentUrl' => $currentUrl,
             'commentForm' => $form->createView(),
+        ]);
+    }
+
+    #[Route('/trick/delete/{id}', name: 'app_delete_trick', methods : ['GET', 'POST'])]
+    public function delete(Trick $trick): Response
+    {
+        if ($this->getUser() !== $trick->getUser()) {
+            $this->addFlash('danger', 'Un problème est survenu, veuillez réessayer.');
+            return $this->redirectToRoute('app_trick', ['slug' => $trick->getSlug()]);
+        }
+        $this->entityManager->remove($trick);
+        $this->entityManager->flush();
+        $this->addFlash('success', 'La suppression du trick a été effectuée avec succès.');
+        return $this->redirectToRoute('app_list_trick');
+    }
+
+    /**
+     * @throws ContainerExceptionInterface
+     * @throws NotFoundExceptionInterface
+     */
+    #[Route('/add-trick', name: 'app_add_trick', methods : ['GET', 'POST'])]
+    public function add(Request $request, EntityManagerInterface $entityManager, SluggerInterface $slugger): Response
+    {
+        if (empty($this->getUser())) {
+            $this->addFlash('danger', 'Vous devez être connecté pour ajouter un trick.');
+            return $this->redirectToRoute('app_login');
+        }
+        $currentUrl = $this->urlGenerator->generate(
+            $this->container->get('request_stack')->getCurrentRequest()->attributes->get('_route'),
+            $this->container->get('request_stack')->getCurrentRequest()->attributes->get('_route_params'),
+            UrlGeneratorInterface::ABSOLUTE_URL
+        );
+
+        $trick = new Trick();
+        $form = $this->createForm(TrickFormType::class, $trick);
+
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            try {
+                $slug = $slugger->slug($trick->getName())->lower();
+                $trick->setSlug($slug);
+                $trick->setUser($this->getUser());
+                $entityManager->persist($trick);
+                $entityManager->flush();
+                $this->addFlash('success', 'Le trick a été ajouté avec succès.');
+            } catch (\Exception $e) {
+                $this->addFlash('danger', 'Une erreur est survenue lors de l\'ajout du trick.');
+                return $this->render('trick/add.html.twig', [
+                    'trickForm' => $form->createView(),
+                    'currentUrl' => $currentUrl,
+                ]);
+            }
+            return $this->redirectToRoute('app_trick', ['slug' => $trick->getSlug()]);
+        }
+
+        return $this->render('trick/add.html.twig', [
+            'trickForm' => $form->createView(),
+            'currentUrl' => $currentUrl,
+        ]);
+    }
+
+    #[Route('/trick/edit/{id}', name: 'app_edit_trick', methods : ['GET', 'POST'])]
+    public function edit(Trick $trick, Request $request, EntityManagerInterface $entityManager, SluggerInterface $slugger): Response
+    {
+        if (empty($this->getUser())) {
+            $this->addFlash('danger', 'Vous devez être connecté pour modifier un trick.');
+            return $this->redirectToRoute('app_login');
+        }
+        $currentUrl = $this->urlGenerator->generate(
+            $this->container->get('request_stack')->getCurrentRequest()->attributes->get('_route'),
+            $this->container->get('request_stack')->getCurrentRequest()->attributes->get('_route_params'),
+            UrlGeneratorInterface::ABSOLUTE_URL
+        );
+        $form = $this->createForm(TrickFormType::class, $trick);
+
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            try {
+                $slug = $slugger->slug($trick->getName())->lower();
+                $trick->setSlug($slug);
+                $trick->setUser($this->getUser());
+                $entityManager->persist($trick);
+                $entityManager->flush();
+                $this->addFlash('success', 'Le trick a été modifié avec succès.');
+            } catch (\Exception $e) {
+                $this->addFlash('danger', 'Une erreur est survenue lors de la modification du trick.');
+                return $this->render('trick/edit.html.twig', [
+                    'trickForm' => $form->createView(),
+                    'currentUrl' => $currentUrl,
+                ]);
+            }
+            return $this->redirectToRoute('app_trick', ['slug' => $trick->getSlug()]);
+        }
+
+        return $this->render('trick/edit.html.twig', [
+            'trick' => $trick,
+            'trickForm' => $form->createView(),
+            'currentUrl' => $currentUrl,
         ]);
     }
 }

@@ -27,6 +27,7 @@ class Picture
     private ?int $id = null;
 
     #[ORM\ManyToOne(inversedBy: 'pictures')]
+    #[ORM\JoinColumn(onDelete: 'cascade')]
     private ?Trick $trick = null;
 
     #[Vich\UploadableField(mapping: 'picture', fileNameProperty: 'name')]
