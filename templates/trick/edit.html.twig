@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edition d'un Trick - SnowTricks{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <h1 class="text-center">Modifier {{ trick.name() }}</h1>
+        <div class="row">
+            <div class="col-md-12">
+                {% include  'trick/_form.html.twig' with {'button_label':'Modifier'} %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

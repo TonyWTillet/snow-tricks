@@ -7,14 +7,7 @@
         <h1 class="text-center">Ajouter un Trick</h1>
         <div class="row">
             <div class="col-md-12">
-                {{ form_start(form) }}
-                    {{ form_row(form.name) }}
-                    {{ form_row(form.description) }}
-                    {{ form_row(form.category) }}
-                    {{ form_row(form.image) }}
-                    {{ form_row(form.videos) }}
-                    {{ form_row(form.save) }}
-                {{ form_end(form) }}
+               {% include  'trick/_form.html.twig' %}
             </div>
         </div>
     </div>
