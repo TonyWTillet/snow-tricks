@@ -20,7 +20,7 @@ class Video
     #[ORM\JoinColumn(onDelete: 'cascade')]
     private ?Trick $trick = null;
 
-    #[ORM\Column(length: 255, nullable: false)]
+    #[ORM\Column(type: Types::TEXT, nullable: false)]
     private ?string $name = null;
 
 
