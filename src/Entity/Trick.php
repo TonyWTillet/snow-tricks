@@ -54,10 +54,10 @@ class Trick
     #[ORM\OrderBy(["created_at" => "DESC"])]
     private Collection $comments;
 
-    #[ORM\OneToMany(mappedBy: 'trick', targetEntity: Picture::class)]
+    #[ORM\OneToMany(mappedBy: 'trick', targetEntity: Picture::class, cascade: ['persist'])]
     private Collection $pictures;
 
-    #[ORM\OneToMany(mappedBy: 'trick', targetEntity: Video::class)]
+    #[ORM\OneToMany(mappedBy: 'trick', targetEntity: Video::class, cascade: ['persist'])]
     private Collection $videos;
 
     public function __construct()
@@ -235,6 +235,7 @@ class Trick
     {
         if (!$this->pictures->contains($picture)) {
             $this->pictures->add($picture);
+            $picture->setTrick($this);
         }
 
         return $this;

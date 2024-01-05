@@ -3,11 +3,13 @@
 namespace App\Controller;
 
 use App\Entity\Comment;
+use App\Entity\Picture;
 use App\Entity\Trick;
 use App\Form\CommentType;
 use App\Form\TrickFormType;
 use App\Repository\CommentRepository;
 use App\Repository\TrickRepository;
+use App\Service\PictureService;
 use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\NotFoundExceptionInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -76,7 +78,7 @@ class TrickController extends AbstractController
      * @throws NotFoundExceptionInterface
      */
     #[Route('/add-trick', name: 'app_add_trick', methods : ['GET', 'POST'])]
-    public function add(Request $request, EntityManagerInterface $entityManager, SluggerInterface $slugger): Response
+    public function add(Request $request, EntityManagerInterface $entityManager, SluggerInterface $slugger, PictureService $pictureService): Response
     {
         if (empty($this->getUser())) {
             $this->addFlash('danger', 'Vous devez être connecté pour ajouter un trick.');
@@ -96,6 +98,15 @@ class TrickController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             try {
+                $pictures = $form->get('pictures')->getData();
+                foreach ($pictures as $picture) {
+                    $folder = 'tricks';
+                    $file = $pictureService->add($picture, $folder, 300, 300);
+                    $img = new Picture();
+                    $img->setName($file);
+                    $img->setAlt($trick->getName());
+                    $trick->addPicture($img);
+                }
                 $slug = $slugger->slug($trick->getName())->lower();
                 $trick->setSlug($slug);
                 $trick->setUser($this->getUser());
@@ -119,7 +130,7 @@ class TrickController extends AbstractController
     }
 
     #[Route('/trick/edit/{id}', name: 'app_edit_trick', methods : ['GET', 'POST'])]
-    public function edit(Trick $trick, Request $request, EntityManagerInterface $entityManager, SluggerInterface $slugger): Response
+    public function edit(Trick $trick, Request $request, EntityManagerInterface $entityManager, SluggerInterface $slugger, PictureService $pictureService): Response
     {
         if (empty($this->getUser())) {
             $this->addFlash('danger', 'Vous devez être connecté pour modifier un trick.');
@@ -137,6 +148,15 @@ class TrickController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             try {
+                $pictures = $form->get('pictures')->getData();
+                foreach ($pictures as $picture) {
+                    $folder = 'tricks';
+                    $file = $pictureService->add($picture, $folder, 300, 300);
+                    $img = new Picture();
+                    $img->setName($file);
+                    $img->setAlt($trick->getName());
+                    $trick->addPicture($img);
+                }
                 $slug = $slugger->slug($trick->getName())->lower();
                 $trick->setSlug($slug);
                 $trick->setUser($this->getUser());

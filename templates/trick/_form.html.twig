@@ -18,6 +18,11 @@
         <div class="form-group">
             {{ form_row(trickForm.category) }}
         </div>
+
+        <div class="form-group">
+                {{ form_row(trickForm.pictures) }}
+        </div>
+
         <button class="btn btn-primary btn-md text-white" type="submit">
                 {{ button_label|default('Ajouter') }}
         </button>
