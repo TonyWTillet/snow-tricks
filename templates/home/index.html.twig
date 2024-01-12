@@ -26,11 +26,11 @@
             <div class="row">
 
                 {% for trick in tricks %}
-                {% set pictureName = trick.defaultPicture is empty ? 'default-picture-trick.png' : trick.defaultPicture.name %}
+                {% set pictureName = trick.defaultPicture is empty ? asset('uploads/tricks/default-picture-trick.png') : asset('uploads/tricks/') ~ trick.defaultPicture.name %}
                 <div class="col-xl-3 col-lg-4 col-md-6 mb-4">
                     <div class="post-entry-1 h-100">
                         <a href="trick/{{ trick.slug() }}">
-                            <img src="{{ asset('images/tricks/') ~ pictureName }}" alt="{{ trick.name()|capitalize }}"
+                            <img src="{{ pictureName }}" alt="{{ trick.name()|capitalize }}"
                                  class="img-fluid">
                         </a>
                         <div class="post-entry-1-contents">

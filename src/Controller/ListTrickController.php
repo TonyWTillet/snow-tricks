@@ -9,6 +9,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Twig\Environment;
+use Twig\Loader\FilesystemLoader;
+use Twig\TwigFunction;
 
 class ListTrickController extends AbstractController
 {
@@ -30,8 +33,8 @@ class ListTrickController extends AbstractController
             $this->container->get('request_stack')->getCurrentRequest()->attributes->get('_route_params'),
             UrlGeneratorInterface::ABSOLUTE_URL
         );
+        $tricks = $trickRepository->findTrickWithRelations(99, 0);
         return $this->render('list_trick/index.html.twig', [
-            $tricks = $trickRepository->findTrickWithRelations(99, 0),
             'tricks' => $tricks,
             'currentUrl' => $currentUrl,
         ]);

@@ -20,11 +20,45 @@
         </div>
 
         <div class="form-group">
+                <label>Images</label>
+                {% if app.request.attributes.get('_route') is same as 'app_edit_trick' %}
+                        <div class="row mb-4">
+                        {% for picture in trick.pictures %}
+                                {% set defaultPicture = trick.defaultPicture is not empty and trick.defaultPicture.id == picture.id ? 'checked' : '' %}
+                                <div class="col-12 col-lg-4 col-xl-3">
+                                        <img src="{{ asset('uploads/tricks/' ~ picture.name) }}" alt="{{ picture.alt }}" class="img-fluid">
+                                        <label for="default_picture-{{ picture.id }}">
+                                                Image par défaut
+                                                <input type="radio" name="{{ field_name(trickForm.default_picture) }}" value="{{ picture.id }}" id="default_picture-{{ picture.id }}"  style="margin-right: 15px" {{ defaultPicture }}/>
+                                        </label>
+                                        <a href="{{ path('app_delete_trick_image', {id: picture.id}) }}" data-delete data-token="{{ csrf_token('delete' ~ picture.id ) }}"><i class="fa-solid fa-trash" style="color:rgb(220,53,69);font-size: 20px;margin-top: 10px"></i></a>
+                                </div>
+                        {% endfor %}
+                        </div>
+                {% endif %}
+
+
                 {{ form_row(trickForm.pictures) }}
+        </div>
+
+        <div class="form-group">
+                <label>Vidéos</label>
+                {% if app.request.attributes.get('_route') is same as 'app_edit_trick' %}
+                        <div class="row mb-4">
+                                {% for video in trick.videos %}
+                                        <div class="col-12 col-lg-4 col-xl-3">
+                                                <img src="{{ asset('uploads/tricks/' ~ video.name) }}" alt="{{ video.alt }}" class="img-fluid">
+                                                <a href="{{ path('app_delete_trick_video', {id: video.id}) }}" data-delete-video data-token="{{ csrf_token('videodelete' ~ video.id ) }}"><i class="fa-solid fa-trash" style="color:rgb(220,53,69);font-size: 20px;margin-top: 10px"></i></a>
+                                        </div>
+                                {% endfor %}
+                        </div>
+                {% endif %}
+
+                {{ form_row(trickForm.videos) }}
         </div>
 
         <button class="btn btn-primary btn-md text-white" type="submit">
                 {{ button_label|default('Ajouter') }}
         </button>
-        {{ form_end(trickForm) }}
+        {{ form_end(trickForm, {'render_rest': false}) }}
 </div>

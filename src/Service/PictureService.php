@@ -17,6 +17,13 @@ class PictureService
     }
 
     /**
+     * Add a picture to the server
+     *
+     * @param UploadedFile $picture
+     * @param string|null $folder
+     * @param int|null $width
+     * @param int|null $height
+     * @return string
      * @throws Exception
      */
     public function add(UploadedFile $picture, ?string $folder = '', ?int $width = 250, ?int $height = 250): string
@@ -77,7 +84,7 @@ class PictureService
         return $file;
     }
 
-    public function delete(string $file, ?string $folder = ''): bool
+    public function delete(string $file, ?string $folder = '', ?int $width = 300, ?int $height = 300): bool
     {
         if ($file !== 'default.webp') {
             $success = false;
