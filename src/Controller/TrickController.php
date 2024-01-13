@@ -81,7 +81,7 @@ class TrickController extends AbstractController
      * @throws NotFoundExceptionInterface
      */
     #[Route('/add-trick', name: 'app_add_trick', methods : ['GET', 'POST'])]
-    public function add(Request $request, EntityManagerInterface $entityManager, SluggerInterface $slugger, PictureService $pictureService): Response
+    public function add(Request $request, EntityManagerInterface $entityManager, SluggerInterface $slugger,VideoService $videoService, PictureService $pictureService): Response
     {
         if (empty($this->getUser())) {
             $this->addFlash('danger', 'Vous devez être connecté pour ajouter un trick.');
@@ -102,6 +102,7 @@ class TrickController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             try {
                 $pictures = $form->get('pictures')->getData();
+                $videos = $form->get('videos')->getData();
                 foreach ($pictures as $picture) {
                     $folder = 'tricks';
                     $file = $pictureService->add($picture, $folder, 300, 300);
@@ -109,6 +110,15 @@ class TrickController extends AbstractController
                     $img->setName($file);
                     $img->setAlt($trick->getName());
                     $trick->addPicture($img);
+                }
+                foreach ($videos as $video) {
+                    if (!$videoService->verifyPost($video)) {
+                        $this->addFlash('warning', 'La vidéo ('.$video.') n\'est pas valide.');
+                        continue;
+                    }
+                    $vid = new Video();
+                    $vid->setName($video);
+                    $trick->addVideo($vid);
                 }
                 $slug = $slugger->slug($trick->getName())->lower();
                 $trick->setSlug($slug);
@@ -136,7 +146,7 @@ class TrickController extends AbstractController
     }
 
     #[Route('/trick/edit/{id}', name: 'app_edit_trick', methods : ['GET', 'POST'])]
-    public function edit(Trick $trick, Request $request, EntityManagerInterface $entityManager, SluggerInterface $slugger, PictureService $pictureService): Response
+    public function edit(Trick $trick, Request $request, EntityManagerInterface $entityManager, SluggerInterface $slugger, PictureService $pictureService, VideoService $videoService): Response
     {
         if (empty($this->getUser())) {
             $this->addFlash('danger', 'Vous devez être connecté pour modifier un trick.');
@@ -150,10 +160,10 @@ class TrickController extends AbstractController
 
         $form = $this->createForm(TrickFormType::class, $trick);
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
             try {
                 $pictures = $form->get('pictures')->getData();
+                $videos = $form->get('videos')->getData();
                 $defaultPictureId = $form->get('default_picture')->getData();
                 foreach ($pictures as $picture) {
                     $folder = 'tricks';
@@ -162,6 +172,15 @@ class TrickController extends AbstractController
                     $img->setName($file);
                     $img->setAlt($trick->getName());
                     $trick->addPicture($img);
+                }
+                foreach ($videos as $video) {
+                    if (!$videoService->verifyPost($video)) {
+                        $this->addFlash('warning', 'La vidéo ('.$video.') n\'est pas valide.');
+                        continue;
+                    }
+                    $vid = new Video();
+                    $vid->setName($video);
+                    $trick->addVideo($vid);
                 }
                 $slug = $slugger->slug($trick->getName())->lower();
                 $trick->setSlug($slug);
@@ -224,9 +243,9 @@ class TrickController extends AbstractController
 
         $data = json_decode($request->getContent(), true);
 
-        if ($this->isCsrfTokenValid('videodelete'.$video->getId(), $data['_token'])) {
+        if ($this->isCsrfTokenValid('delete'.$video->getId(), $data['_token'])) {
             $name = $video->getName();
-            if ($videoService->delete($name, 'tricks')) {
+            if (!empty($name)) {
                 $entityManager->remove($video);
                 $entityManager->flush();
                 return new JsonResponse(['success' => 'La vidéo a été supprimée avec succès.'], 200);
@@ -237,4 +256,5 @@ class TrickController extends AbstractController
 
         return new JsonResponse(['danger' => 'Token invalide'], 400);
     }
+
 }

@@ -211,6 +211,7 @@ class Trick
     {
         if (!$this->videos->contains($video)) {
             $this->videos->add($video);
+            $video->setTrick($this);
         }
 
         return $this;

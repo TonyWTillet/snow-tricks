@@ -61,14 +61,23 @@ class TrickFormType extends AbstractType
                     'class' => 'form-control',
                 ],
             ])
-            ->add('videos', TextType::class, [
+            ->add('videos',CollectionType::class, options: [
                 'label' => false,
                 'allow_extra_fields' => true,
                 'mapped' => false,
                 'required' => false,
-                'attr' => [
-                    'placeholder' => '<iframe width="560" height="315" src="https://www.youtube.com/embed/u31qwQUeGuM?si=SQclWzO3k9RATAae" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>',
-                    'class' => 'form-control',
+                'entry_type' => TextType::class,
+                'allow_add' => true,
+                'allow_delete' => true,
+                'prototype_name' => '0',
+                'prototype_options'  => [
+                    'label' => 'Ajouter une vidéo embed de la plateforme de votre choix (Youtube, Dailymotion, Vimeo, etc...)',
+                    'attr' => [
+                        'label' => false,
+                        'class' => 'form-control',
+                    ],
+                    'required' => false,
+                    'help' => '',
                 ],
             ])
             ->add('default_picture', options: [
@@ -89,4 +98,5 @@ class TrickFormType extends AbstractType
             'data_class' => Trick::class,
         ]);
     }
+
 }
