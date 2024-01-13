@@ -1,3 +1,4 @@
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/b2e151dc2c704172921d41d5faab1f3d)](https://app.codacy.com/gh/TonyWTillet/snow-tricks/dashboard?utm_source=gh&utm_medium=referral&utm_content=&utm_campaign=Badge_grade)
 
 # CONTEXTE
 Projet 6 de mon parcours Développeur d'application PHP/Symfony chez OpenClassrooms.
