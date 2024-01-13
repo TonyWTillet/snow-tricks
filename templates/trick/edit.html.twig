@@ -12,3 +12,9 @@
         </div>
     </div>
 {% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('js/image.js') }}" defer></script>
+    <script src="{{ asset('js/video.js') }}" defer></script>
+{% endblock %}
