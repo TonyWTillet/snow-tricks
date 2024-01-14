@@ -39,7 +39,7 @@ class TrickController extends AbstractController
      * @throws ContainerExceptionInterface
      */
     #[Route('/trick/{slug}', name: 'app_trick', methods : ['GET', 'POST'])]
-    public function index(Trick $trick, Request $request): Response
+    public function index(Trick $trick, Request $request, CommentRepository $commentRepository): Response
     {
         $currentUrl = $this->urlGenerator->generate(
             $this->container->get('request_stack')->getCurrentRequest()->attributes->get('_route'),
@@ -56,8 +56,14 @@ class TrickController extends AbstractController
             $this->entityManager->flush();
             return $this->redirectToRoute('app_trick', ['slug' => $trick->getSlug()]);
         }
+
+        $offset = max(0, $request->query->getInt('offset', 0));
+        $paginator = $commentRepository->getCommentPaginator($offset, $trick->getId());
         return $this->render('trick/index.html.twig', [
             'trick' => $trick,
+            'comments' => $paginator,
+            'previous' => $offset - CommentRepository::PAGINATOR_PER_PAGE,
+            'next' => min(count($paginator), $offset + CommentRepository::PAGINATOR_PER_PAGE),
             'currentUrl' => $currentUrl,
             'commentForm' => $form->createView(),
         ]);
@@ -174,6 +180,9 @@ class TrickController extends AbstractController
                     $trick->addPicture($img);
                 }
                 foreach ($videos as $video) {
+                    if (empty($video)) {
+                        continue;
+                    }
                     if (!$videoService->verifyPost($video)) {
                         $this->addFlash('warning', 'La vidéo ('.$video.') n\'est pas valide.');
                         continue;
@@ -188,6 +197,7 @@ class TrickController extends AbstractController
                     $defaultPicture = $entityManager->getRepository(Picture::class)->find($defaultPictureId);
                     $trick->setDefaultPicture($defaultPicture);
                 }
+                $trick->setUpdatedAt(new \DateTime());
                 $trick->setUser($this->getUser());
                 $entityManager->persist($trick);
                 $entityManager->flush();

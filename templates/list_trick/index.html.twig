@@ -29,18 +29,42 @@
                         <div class="post-entry-1 h-100">
                             <a href="trick/{{ trick.slug() }}">
                                 <img src="{{ pictureName }}" alt="{{ trick.name()|capitalize }}"
-                                     class="img-fluid">
+                                     class="img-fluid image-listing">
                             </a>
                             <div class="post-entry-1-contents">
-
-                                <h2><a href="">{{ trick.name() }}</a></h2>
+                                <h2><a href="trick/{{ trick.slug() }}">{{ trick.name() }}</a></h2>
                                 <span class="meta d-inline-block mb-1">{{ trick.createdAt()|date('d/m/Y') }}
                                 <span class="mx-2">de</span>
-                                <a href="#">{{ trick.user.pseudo|capitalize }}</a>
-                            </span>
+                                    <a href="#">{{ trick.user.pseudo|capitalize }}</a>
+                                </span>
                                 <span class="meta d-inline-block mb-3">Catégorie :
-                                <a href="{{ trick.category.name }}">{{ trick.category.name|capitalize }}</a>
-                            </span>
+                                    <a href="#">{{ trick.category.name|capitalize }}</a>
+                                </span>
+                                {% if app.user.id is defined and  app.user.id == trick.getUser().id and app.user.isVerified == true %}
+                                    <span class="meta d-inline-block mb-3">
+                                        <a data-aos="fade-up" data-aos-delay="110" href="{{ path('app_edit_trick', {'id': trick.id()}) }}"><i class="fa-solid fa-pen-to-square" style="font-size: 20px;"></i></a>
+                                        <a role="button" data-bs-toggle="modal" href="#{{ trick.slug() }}ModalToggle" data-aos="fade-up" data-aos-delay="110"><i class="fa-solid fa-trash" style="font-size: 20px; margin-left: 10px"></i></a>
+                                    </span>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal fade" id="{{ trick.slug() }}ModalToggle" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalToggleLabel">Supprimer {{ trick.name() }}</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    Êtes-vous sûr(e) de vouloir supprimer ce trick ?.
+                                </div>
+                                <div class="modal-footer">
+                                    <form method="post">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                                        <a href="{{ path('app_delete_trick', {'id': trick.id()}) }}" class="btn btn-danger">Supprimer</a>
+                                    </form>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -48,8 +72,19 @@
             </div>
 
 
-            <div class="col-12 mt-5 text-center">
-                <button class="p-3 btn btn-primary">Load More</button>
+            <div class="row justify-content-center">
+                <div class="col-auto pt-6 text-lg">
+                    {% if previous >= 0 %}
+                        <a href="{{ path('app_list_trick', { offset: previous }) }}#list_tricks"
+                           class="mx-2 underline btn btn-secondary">previous tricks</a>
+                    {% endif %}
+                </div>
+                <div class="col-auto pt-6 text-lg">
+                    {% if next < tricks|length %}
+                        <a href="{{ path('app_list_trick', { offset: next }) }}#list_tricks"
+                           class="mx-2 underline btn btn-secondary">next tricks</a>
+                    {% endif %}
+                </div>
             </div>
 
         </div>

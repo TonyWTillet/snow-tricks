@@ -24,38 +24,67 @@
     </div>
 
     <div class="site-section">
+        {% if trick.pictures|length > 0 or trick.videos|length > 0 %}
+            <div class="container-fluid">
+                <div class="row mb-4 blog-content justify-content-center images-desktop">
+                    {% if trick.pictures|length > 0 %}
+                        {% for picture in trick.pictures %}
+                            <div class="col-12 col-lg-4 col-xl-3">
+                                <img src="{{ asset('uploads/tricks/' ~ picture.name) }}" alt="{{ picture.alt }}" class="img-fluid">
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                    {% if trick.videos|length > 0 %}
+                        {% for video in trick.videos %}
+                            <div class="col-12 col-lg-4 col-xl-3">
+                                {{ video.name|raw }}
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                </div>
+            </div>
+        {% endif %}
         <div class="container">
             <div class="row">
                 <div class="col-12 blog-content">
                     <p class="lead">Catégorie : {{ trick.category.name|capitalize }}</p>
-                    <div class="col-12 my-4 p-0">
-                        <div class="row">
-                            {% if trick.pictures|length > 0 %}
-                                {% for picture in trick.pictures %}
-                                    <div class="col-12 col-lg-4 col-xl-3">
-                                        <img src="{{ asset('uploads/tricks/' ~ picture.name) }}" alt="{{ picture.alt }}" class="img-fluid">
-                                    </div>
-                                {% endfor %}
-                            {% endif %}
-                        </div>
-                    </div>
                     <p>{{ trick.content() }}</p>
 
                     <div class="pt-5">
                         <h3 class="mb-5">Comentaires</h3>
-                        <ul class="comment-list">
-                            {% for comment in trick.comments() %}
+                        <ul class="comment-list" id="comments">
+                            {% if comments|length > 0 %}
+                                {% for comment in comments %}
+                                <li class="comment">
+                                    <div class="vcard bio">
+                                        <img src="{{ asset('images/utilisateur.png') }}" alt="Image">
+                                    </div>
+                                    <div class="comment-body">
+                                        <h3>{{ comment.user.pseudo }}</h3>
+                                        <div class="meta">{{ comment.createdAt()|date('d/m/Y') }}</div>
+                                        <p>{{ comment.content() }}</p>
+                                    </div>
+                                </li>
+                                {% endfor %}
+                                <div class="row justify-content-center">
+                                    <div class="col-auto pt-6 text-lg">
+                                        {% if previous >= 0 %}
+                                            <a href="{{ path('app_trick', {'slug': trick.slug()}) }}?offset={{ previous }}#comments"
+                                               class="mx-2 underline btn btn-secondary">Voir les commentaires précédents</a>
+                                        {% endif %}
+                                    </div>
+                                    <div class="col-auto pt-6 text-lg">
+                                        {% if next < comments|length %}
+                                            <a href="{{ path('app_trick', {'slug': trick.slug()}) }}?offset={{ next }}#comments"
+                                               class="mx-2 underline btn btn-secondary">Voir plus de commentaires</a>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            {% else %}
                             <li class="comment">
-                                <div class="vcard bio">
-                                    <img src="{{ asset('images/person_2.jpg') }}" alt="Image">
-                                </div>
-                                <div class="comment-body">
-                                    <h3>{{ comment.user.pseudo }}</h3>
-                                    <div class="meta">{{ comment.createdAt()|date('d/m/Y') }}</div>
-                                    <p>{{ comment.content() }}</p>
-                                </div>
+                                Aucun commentaire pour le moment.
                             </li>
-                            {% endfor %}
+                            {% endif %}
 
                         </ul>
                         <!-- END comment-list -->
