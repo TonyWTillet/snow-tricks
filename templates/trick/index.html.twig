@@ -26,6 +26,9 @@
     <div class="site-section">
         {% if trick.pictures|length > 0 or trick.videos|length > 0 %}
             <div class="container-fluid">
+                <div class="row mb-4 btn-images-mobile">
+                    <button class="btn btn-primary" id="btn-images">Voir les images et vidéos</button>
+                </div>
                 <div class="row mb-4 blog-content justify-content-center images-desktop">
                     {% if trick.pictures|length > 0 %}
                         {% for picture in trick.pictures %}
