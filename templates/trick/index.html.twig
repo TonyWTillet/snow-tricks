@@ -27,7 +27,7 @@
         {% if trick.pictures|length > 0 or trick.videos|length > 0 %}
             <div class="container-fluid">
                 <div class="row mb-4 btn-images-mobile">
-                    <button class="btn btn-primary" id="btn-images">Voir les images et vidéos</button>
+                    <button class="btn btn-primary" id="btn-images">Voir/Cacher les images et vidéos</button>
                 </div>
                 <div class="row mb-4 blog-content justify-content-center images-desktop">
                     {% if trick.pictures|length > 0 %}
@@ -141,4 +141,9 @@
         </div>
     </div>
 
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('js/see-medias.js') }}" defer></script>
 {% endblock %}

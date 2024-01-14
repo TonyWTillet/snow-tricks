@@ -305,6 +305,9 @@ input[type=file].form-control {
 .btn-images-mobile {
   display: none;
 }
+.icon-menu:before {
+  color: black;
+}
 @media screen and (max-width: 1023px) {
   .images-desktop {
     display: none;
@@ -314,6 +317,9 @@ input[type=file].form-control {
   }
   .images-desktop.active {
     display: flex;
+  }
+  .images-desktop .col-12 {
+    margin-bottom: 15px;
   }
 }
 .blog-content.images-desktop iframe, .blog-content.images-desktop img {
