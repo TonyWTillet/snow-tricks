@@ -51,7 +51,7 @@
             <div class="row">
                 <div class="col-12 blog-content">
                     <p class="lead">Catégorie : {{ trick.category.name|capitalize }}</p>
-                    <p>{{ trick.content() }}</p>
+                    <p>{{ trick.content()|raw }}</p>
 
                     <div class="pt-5">
                         <h3 class="mb-5">Comentaires</h3>
@@ -60,7 +60,7 @@
                                 {% for comment in comments %}
                                 <li class="comment">
                                     <div class="vcard bio">
-                                        <img src="{{ asset('images/utilisateur.png') }}" alt="Image">
+                                        <img src="https://picsum.photos/id/1{{ loop.index }}/50/50?" alt="Avatar">
                                     </div>
                                     <div class="comment-body">
                                         <h3>{{ comment.user.pseudo }}</h3>

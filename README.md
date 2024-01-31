@@ -33,11 +33,10 @@ Lien vers les analyses SensioLabsInsight, Codacy ou Codeclimate (via une médail
 # HOW INSTALL THIS PROJECT 
 
 ## Template
-- Demo : https://www.tailwindawesome.com/resources/stablo/demo
-- Git : https://github.com/web3templates/stablo
+- Demo : https://colorlib.com/wp/template/trips/
 
 ## Required and technical environment
-> Language => PHP 8.1.*
+> Language => PHP 8.3.*
 
 > Database => MySQL 5.7.25
 
@@ -49,6 +48,8 @@ Lien vers les analyses SensioLabsInsight, Codacy ou Codeclimate (via une médail
 
 > NodeJS 
 
+> Make
+
 
 ## Step 1: clone the projet
     git clone https://github.com/TonyWTillet/snow-tricks.git
@@ -56,32 +57,24 @@ Lien vers les analyses SensioLabsInsight, Codacy ou Codeclimate (via une médail
 ## Step 2: install composer
 https://getcomposer.org/download/
 
-## Step 3: download back dependencies 
-    composer install
+## Step 3: install Makefile
+    https://gnuwin32.sourceforge.net/packages/make.html
 
-## Step 4: webpack encore
-    npm install
+## Step 4: config .env
 
-## Step 5: config .env
+## Step 5: install dependencies
+    make init
 
 ## Step 6: create DB
     php bin/console d:d:c
 
-## Step 7: update schema (create tables)
-    php bin/console d:s:u -f
-    OR
-    php bin/console make:migration
-    php bin/console doctrine:migrations:migrate
+## Step 7: install database
+    make database-init
 
-## Step 8: load fixtures
-> Avant de lancer une fixtures vérifier bien que les images sont dans le dossiers DataFixtures/img. Sinon, Déplacer les images qui sont dans le dossier DataFixtures/img-Save vers DataFixtures/img.
+## Step 8: start server
+    symfony server:start
 
-    php bin/console do:fi:lo  
-
-## Step 9: start server
-    symfony serve
-
-## Step 10: default user
+## Step 9: default user
 <table>
     <thead>
         <tr>
@@ -92,23 +85,14 @@ https://getcomposer.org/download/
     </thead>
     <tbody>
         <tr>
-            <td>user@gmail.com</td>
-            <td align="center">openclassrooms-P6</td>
-            <td align="right">ROLE_USER</td>
+            <td>tony.tillet@gmail.com</td>
+            <td align="center">admin</td>
+            <td align="right">ROLE_ADMIN</td>
         </tr>
         <tr>
-            <td>admin@gmail.com</td>
-            <td align="center">openclassrooms-P6</td>
-            <td align="right">ROLE_ADMIN</td>
+            <td>user@gmail.com</td>
+            <td align="center">user</td>
+            <td align="right">ROLE_USER</td>
         </tr>
     </tbody>
 </table>
-
-## Step 11: Security in Production
-> Htacces
-
-> Generate new keygen for APP_SECRET:
-Randomkeygen.com
-
-# UML DIAGRAMM
-<a href="public/diagrammes">click here</a>
