@@ -297,7 +297,36 @@ h1, h2, h3, h4, h5,
 input[type=file].form-control {
   height: auto;
 }
-
+.image-listing.img-fluid {
+  height: 225px;
+  width: 100%;
+  object-fit: cover;
+}
+.btn-images-mobile {
+  display: none;
+}
+.icon-menu:before {
+  color: black;
+}
+@media screen and (max-width: 1023px) {
+  .images-desktop {
+    display: none;
+  }
+  .btn-images-mobile {
+    display: flex;
+  }
+  .images-desktop.active {
+    display: flex;
+  }
+  .images-desktop .col-12 {
+    margin-bottom: 15px;
+  }
+}
+.blog-content.images-desktop iframe, .blog-content.images-desktop img {
+  width: 100%;
+  height: 225px;
+  object-fit: cover;
+}
 .site-section {
   padding: 2.5em 0; }
   @media (min-width: 768px) {

@@ -29,12 +29,10 @@ class UsersController extends AbstractController
             $entityManager->persist($user); // Necessary when updating an existing entity
             $entityManager->flush();
 
-            $this->addFlash('success', 'User updated successfully.');
+            $this->addFlash('success', 'Vos informations ont bien été mises à jours.');
 
             return $this->redirectToRoute('app_users_edit');
         }
-
-
 
         return $this->render('users/edit.html.twig', [
             'currentUrl' => $currentUrl,
