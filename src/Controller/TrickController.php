@@ -52,6 +52,7 @@ class TrickController extends AbstractController
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $comment->setTrick($trick);
+            $comment->setUser($this->getUser());
             $this->entityManager->persist($comment);
             $this->entityManager->flush();
             return $this->redirectToRoute('app_trick', ['slug' => $trick->getSlug()]);
